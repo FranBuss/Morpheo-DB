@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="697eb6a3-896c-464c-bf0e-45179c0475c4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/JuegoService.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/vistaJuego.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/JuegoController.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/JuegoController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/Juego.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Juego.py" afterDir="false" />
@@ -48,6 +51,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Python.Juego.executor": "Run",
+    "Python.JuegoController.executor": "Run",
+    "Python.main.executor": "Run",
     "Python.mainTest.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master"
