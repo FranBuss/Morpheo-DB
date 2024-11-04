@@ -14,6 +14,3 @@ class Juego:
 
 
 
-juego = Juego("DARK SOULS", "Soulslike")
-juego.add_juego()
-

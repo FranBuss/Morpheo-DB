@@ -6,7 +6,7 @@ class JuegoController:
         pass
 
     @staticmethod
-    def get_all_juegos() -> None:
+    def getAllJuegos() -> None:
         db = DatabaseManager()
         juegos = db.select_data('SELECT * FROM JUEGOS')
         for juego in juegos:
