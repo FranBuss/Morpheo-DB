@@ -15,8 +15,8 @@ class ServicioJuego:
 
             #Instancio nuevo juego
             juego = Juego(
-                nombre= nombre.upper(),
-                genero= genero.upper()
+                nombre= nombre.capitalize(),
+                genero= genero.capitalize()
             )
 
             query = '''INSERT INTO dbo.JUEGOS(NOMBRE, GENERO) VALUES ('{}','{}')'''.format(juego.get_nombre(), juego.get_genero())

@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="697eb6a3-896c-464c-bf0e-45179c0475c4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/models/Usuario.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/UsuarioService.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/JuegoController.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/JuegoController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Juego.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Juego.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/JuegoService.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/JuegoService.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,21 +48,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.Juego.executor": "Run",
-    "Python.JuegoController.executor": "Run",
-    "Python.JuegoService.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.mainTest.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.Juego.executor&quot;: &quot;Run&quot;,
+    &quot;Python.JuegoController.executor&quot;: &quot;Run&quot;,
+    &quot;Python.JuegoService.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.mainTest.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/franb/OneDrive/Documentos/proyecto-final/Morpheo-DB&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-d7ad00fb9fc3-c546a90a8094-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.23726.102" />
+        <option value="bundled-python-sdk-babbdf50b680-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.15989.155" />
       </set>
     </attachedChunks>
   </component>
