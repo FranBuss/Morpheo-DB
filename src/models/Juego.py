@@ -11,3 +11,8 @@ class Juego:
         self.__nombre = nombre
         self.__genero = genero
 
+    def get_nombre(self):
+        return self.__nombre
+
+    def get_genero(self):
+        return self.__genero
