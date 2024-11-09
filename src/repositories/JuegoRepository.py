@@ -1,24 +1,15 @@
 import pyodbc
-from src.repositories.JuegoRepository import  JuegoRepository
+from config import DRIVER, SERVER, DATABASE
 from src.models.Juego import Juego
 
-
-class ServicioJuego:
+class JuegoRepository:
 
     def __init__(self):
-        self.juegoRepository = JuegoRepository()
-
+        self.conexion = pyodbc.connect(f"DRIVER={DRIVER};SERVER={SERVER};DATABASE={DATABASE}")
 
     def crear(self, nombre, genero):
         cursor = self.conexion.cursor()
         try:
-
-            #Instancio nuevo juego
-            juego = Juego(
-                nombre= nombre.capitalize(),
-                genero= genero.capitalize()
-            )
-
             query = '''INSERT INTO dbo.JUEGOS(NOMBRE, GENERO) VALUES ('{}','{}')'''.format(juego.get_nombre(), juego.get_genero())
             cursor.execute(query)
             self.conexion.commit()
@@ -75,9 +66,3 @@ class ServicioJuego:
             return juego
         else:
             return None
-
-nuevoServicio = ServicioJuego()
-lista = nuevoServicio.lista_juegos()
-
-for e in lista:
-    print(e,"\n")
