@@ -10,7 +10,7 @@ class JuegoRepository:
     def crear(self, nombre, genero):
         cursor = self.conexion.cursor()
         try:
-            query = '''INSERT INTO dbo.JUEGOS(NOMBRE, GENERO) VALUES ('{}','{}')'''.format(juego.get_nombre(), juego.get_genero())
+            query = '''INSERT INTO dbo.JUEGOS(NOMBRE, GENERO) VALUES ('{}','{}')'''.format(nombre, genero)
             cursor.execute(query)
             self.conexion.commit()
             print("Juego creado correctamente.")
@@ -21,7 +21,7 @@ class JuegoRepository:
     def eliminar(self, nombre):
         cursor = self.conexion.cursor()
         try:
-            query = '''DELETE FROM dbo.JUEGOS WHERE NOMBRE = {}'''.format(nombre)
+            query = '''DELETE FROM dbo.JUEGOS WHERE ID_JUEGO = {}'''.format(nombre)
             cursor.execute(query)
             self.conexion.commit()
             print("el juego se ha borrado exitosamente.")
@@ -29,12 +29,12 @@ class JuegoRepository:
         except pyodbc.Error as ex:
             print("Error al borrar el juego: ", ex)
 
-    def actualizar(self, nombre, genero):
+    def actualizar(self, id, nombre, genero):
         cursor = self.conexion.cursor()
         try:
 
             # Revision de codigo
-            juego = self.buscar_juego_nombre(nombre)
+            juego = self.buscar_juego_id(id)
             nuevo_nombre = nombre if juego.get_nombre() != nombre else juego.get_nombre()
             nuevo_genero = genero if juego.get_genero() != genero else juego.get_genero()
 

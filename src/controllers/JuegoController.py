@@ -1,15 +1,13 @@
-from src.configurations.DatabaseManager import DatabaseManager
 from src.services.JuegoService import ServicioJuego
-from PyQt6.QtSql import *
+
 
 class JuegoController:
 
     def __init__(self):
-        pass
+        self.servicioJuego = ServicioJuego()
 
-    @staticmethod
-    def create_game() -> None:
-        servicioJuego = ServicioJuego()
-        juego = servicioJuego.crear()
+    def create_game(self, nombre, genero):
+        self.servicioJuego.crear(nombre, genero)
 
-JuegoController.getJuego(1)
+    def buscar_juego_id(self, id):
+        self.servicioJuego.buscar_juego_id(id)
