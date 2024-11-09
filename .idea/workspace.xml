@@ -7,6 +7,8 @@
     <list default="true" id="697eb6a3-896c-464c-bf0e-45179c0475c4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/JuegoController.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/JuegoController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Juego.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Juego.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Usuario.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Usuario.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/repositories/JuegoRepository.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/repositories/JuegoRepository.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/JuegoService.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/JuegoService.py" afterDir="false" />
     </list>
@@ -55,7 +57,9 @@
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;Python.mainTest.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;franco&quot;
+    &quot;com.google.cloudcode.ide_session_index&quot;: &quot;20241109_0000&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;franco&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="SharedIndexes">

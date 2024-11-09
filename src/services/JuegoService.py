@@ -9,8 +9,10 @@ class ServicioJuego:
         self.juegoRepository = JuegoRepository()
 
 
-    def crear(self, nombre, genero):
-        self.juegoRepository.crear(nombre, genero)
+    def crear(self, nombre, genero, fecha_salida, estado, desarrollador, distribuidor, plataforma, tematica,
+              modo_juego, descripcion, comentario, clasificacion, puntuacion):
+        self.juegoRepository.crear(nombre, genero, fecha_salida, estado, desarrollador, distribuidor, plataforma, tematica,
+              modo_juego, descripcion, comentario, clasificacion, puntuacion)
 
     def eliminar(self, nombre):
         pass
@@ -22,5 +24,5 @@ class ServicioJuego:
         pass
 
     def buscar_juego_id(self, id):
-        pass
+        return self.juegoRepository.buscar_juego_id(id)
 
