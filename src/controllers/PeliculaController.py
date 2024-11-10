@@ -9,7 +9,7 @@ class PeliculaController:
 
     def create_movie(self, nombre, genero, fecha_estreno, duracion, pais, estado, director,
     distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki):
-        self.servicioJuego.crear(nombre, genero, fecha_estreno, duracion, pais, estado, director,
+        self.servicioPelicula.crear(nombre, genero, fecha_estreno, duracion, pais, estado, director,
     distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki)
 
     def buscar_pelicula_id(self, id):

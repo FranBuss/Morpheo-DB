@@ -5,7 +5,7 @@ import pyodbc
 from src.configurations.DatabaseManager import DatabaseManager
 
 
-class Juego:
+class Pelicula:
 
     def __init__(self, id, nombre, genero, fecha_estreno, duracion, pais, estado, director,
     distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki):
