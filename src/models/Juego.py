@@ -8,7 +8,7 @@ from src.configurations.DatabaseManager import DatabaseManager
 class Juego:
 
     def __init__(self, id, nombre, genero, fecha_salida, estado, desarrollador, distribuidor, plataforma, tematica,
-                 modo_juego, descripcion, comentario, clasificacion, puntuacion):
+                modo_juego, descripcion, comentario, clasificacion, puntuacion):
         self.__id = id
         self.__nombre = nombre
         self.__genero = genero

@@ -10,9 +10,9 @@ class ServicioJuego:
 
 
     def crear(self, nombre, genero, fecha_salida, estado, desarrollador, distribuidor, plataforma, tematica,
-              modo_juego, descripcion, comentario, clasificacion, puntuacion):
+            modo_juego, descripcion, comentario, clasificacion, puntuacion):
         self.juegoRepository.crear(nombre, genero, fecha_salida, estado, desarrollador, distribuidor, plataforma, tematica,
-              modo_juego, descripcion, comentario, clasificacion, puntuacion)
+            modo_juego, descripcion, comentario, clasificacion, puntuacion)
 
     def eliminar(self, nombre):
         pass
