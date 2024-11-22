@@ -10,7 +10,7 @@ class JuegoRepository:
         self.conexion = pyodbc.connect(f"DRIVER={DRIVER};SERVER={SERVER};DATABASE={DATABASE}")
 
     def crear(self, nombre, genero, fecha_salida, estado, desarrollador, distribuidor, plataforma, tematica,
-              modo_juego, descripcion, comentario, clasificacion, puntuacion):
+            modo_juego, descripcion, comentario, clasificacion, puntuacion):
         cursor = self.conexion.cursor()
         try:
             query = '''INSERT INTO dbo.JUEGOS(
