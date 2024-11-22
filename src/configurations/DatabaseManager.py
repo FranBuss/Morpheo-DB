@@ -3,7 +3,7 @@ import pyodbc
 class DatabaseManager:
 
     def __init__(self):
-        self.conn = pyodbc.connect("DRIVER={SQL Server};SERVER=DESKTOP-1AMST2L\\SQLEXPRESS;DATABASE=MORPHEO-DB")
+        self.conn = pyodbc.connect("DRIVER={SQL Server};SERVER=DESKTOP-CJFS760\\SQLEXPRESS;DATABASE=MORPHEO-DB")
         self.cursor = self.conn.cursor()
 
     def select_data(self, sql_string):
