@@ -1,5 +1,4 @@
 import pyodbc
-from PyQt6.QtNetwork.QHttpHeaders import value
 
 from config import DRIVER, SERVER, DATABASE
 from src.models.Juego import Juego
@@ -14,10 +13,10 @@ class JuegoRepository:
         cursor = self.conexion.cursor()
         try:
             query = '''INSERT INTO dbo.JUEGOS(
-                    NOMBRE, GENERO, FECHA_SALIDA, ESTADO, DESARROLLADOR, 
-                    DISTRIBUIDOR, PLATAFORMA, TEMATICA, MODO_JUEGO, DESCRIPCION, 
-                    COMENTARIO, CLASIFICACION, PUNTUACION
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+                            NOMBRE, GENERO, FECHA_SALIDA, ESTADO, DESARROLLADOR, 
+                            DISTRIBUIDOR, PLATAFORMA, TEMATICA, MODO_JUEGO, DESCRIPCION, 
+                            COMENTARIO, CLASIFICACION, PUNTUACION
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
             values = (
                 nombre, genero, fecha_salida, estado,
                 desarrollador, distribuidor, plataforma,
@@ -85,13 +84,15 @@ class JuegoRepository:
         query = '''SELECT * FROM JUEGOS'''
         cursor.execute(query)
         juegos = cursor.fetchall()
+        cursor.close()
         return juegos
 
-    def buscar_juego_id(self, id) -> Juego:
+    def buscar_juego_id(self, id) -> Juego | None:
         cursor = self.conexion.cursor()
         query = '''SELECT * FROM JUEGOS WHERE ID_JUEGO = {}'''.format(id)
         cursor.execute(query)
         resultado = cursor.fetchone()
+        cursor.close()
 
         if resultado:
             juego = Juego(
@@ -113,3 +114,5 @@ class JuegoRepository:
             return juego
         else:
             return None
+
+
