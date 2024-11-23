@@ -14,14 +14,14 @@ class ServicioJuego:
         self.juegoRepository.crear(nombre, genero, fecha_salida, estado, desarrollador, distribuidor, plataforma, tematica,
             modo_juego, descripcion, comentario, clasificacion, puntuacion)
 
-    def eliminar(self, nombre):
-        pass
+    def eliminar(self, id):
+        self.juegoRepository.eliminar(id)
 
     def actualizar(self, nombre, genero):
         pass
 
     def lista_juegos(self):
-        pass
+        return self.juegoRepository.lista_juegos()
 
     def buscar_juego_id(self, id):
         return self.juegoRepository.buscar_juego_id(id)
