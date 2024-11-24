@@ -1,5 +1,4 @@
 import pyodbc
-from PyQt6.QtNetwork.QHttpHeaders import value
 
 from config import DRIVER, SERVER, DATABASE
 from src.models.Pelicula import Pelicula

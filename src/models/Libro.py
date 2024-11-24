@@ -1,9 +1,3 @@
-import json
-
-import pyodbc
-
-from src.configurations.DatabaseManager import DatabaseManager
-
 class Libro:
 
     def __init__(self, id, nombre, estado, genero, editorial, fecha_publicacion, pagina_actual, 
