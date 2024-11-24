@@ -17,8 +17,10 @@ class ServicioJuego:
     def eliminar(self, id):
         self.juegoRepository.eliminar(id)
 
-    def actualizar(self, nombre, genero):
-        pass
+    def actualizar(self, id, nombre, genero, fecha_salida, estado, desarrollador, distribuidor, plataforma, tematica,
+              modo_juego, descripcion, comentario, clasificacion, puntuacion):
+        self.juegoRepository.actualizar(id, nombre, genero, fecha_salida, estado, desarrollador, distribuidor, plataforma, tematica,
+              modo_juego, descripcion, comentario, clasificacion, puntuacion)
 
     def lista_juegos(self):
         return self.juegoRepository.lista_juegos()

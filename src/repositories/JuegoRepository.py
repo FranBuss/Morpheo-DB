@@ -42,38 +42,21 @@ class JuegoRepository:
             print("Error al borrar el juego: ", ex)
 
     def actualizar(self, id, nombre, genero, fecha_salida, estado, desarrollador, distribuidor, plataforma, tematica,
-              modo_juego, descripcion, comentario, clasificacion, puntuacion):
+                   modo_juego, descripcion, comentario, clasificacion, puntuacion):
         cursor = self.conexion.cursor()
         try:
-
-            # Revision de codigo
-            juego = self.buscar_juego_id(id)
-            nuevo_nombre = nombre if juego.nombre() != nombre else juego.nombre()
-            nuevo_genero = genero if juego.genero() != genero else juego.genero()
-            nueva_fecha_salida = fecha_salida if juego.fecha_salida() != fecha_salida else juego.fecha_salida()
-            nuevo_estado = estado if juego.estado() != estado else juego.estado()
-            nuevo_desarrollador = desarrollador if juego.desarrollador() != desarrollador else juego.desarrollador()
-            nuevo_distribuidor = distribuidor if juego.distribuidor() != distribuidor else juego.distribuidor()
-            nuevo_plataforma = plataforma if juego.plataforma() != plataforma else juego.plataforma()
-            nuevo_tematica = tematica if juego.tematica() != tematica else juego.tematica()
-            nuevo_modo_juego = modo_juego if juego.modo_juego() != modo_juego else juego.modo_juego()
-            nuevo_descripcion = descripcion if juego.descripcion() != descripcion else juego.descripcion()
-            nuevo_comentario = comentario if juego.comentario() != comentario else juego.comentario()
-            nuevo_clasificacion = clasificacion if juego.clasificacion() != clasificacion else juego.clasificacion()
-            nuevo_puntuacion = puntuacion if juego.puntuacion() != puntuacion else juego.puntuacion()
-
-            query = '''UPDATE dbo.JUEGOS SET NOMBRE = '?', GENERO = '?', FECHA_SALIDA = '?', 
-                        ESTADO = ?, DESARROLLADOR = '?', DISTRIBUIDOR = '?', PLATAFORMA = ?,
-                        TEMATICA = '?', MODO_JUEGO = ?, DESCRIPCION = '?', COMENTARIO = '?',
-                        CLASIFICACION = ?, PUNTUACION = ?'''
-            values = (nuevo_nombre, nuevo_genero, nueva_fecha_salida, nuevo_estado, nuevo_desarrollador,
-                      nuevo_distribuidor, nuevo_plataforma, nuevo_tematica, nuevo_modo_juego, nuevo_descripcion,
-                      nuevo_comentario, nuevo_clasificacion, nuevo_puntuacion)
+            query = '''UPDATE dbo.JUEGOS SET 
+                        NOMBRE = ?, GENERO = ?, FECHA_SALIDA = ?, ESTADO = ?, 
+                        DESARROLLADOR = ?, DISTRIBUIDOR = ?, PLATAFORMA = ?, TEMATICA = ?, 
+                        MODO_JUEGO = ?, DESCRIPCION = ?, COMENTARIO = ?, CLASIFICACION = ?, 
+                        PUNTUACION = ? WHERE ID_JUEGO = ?'''
+            values = (nombre, genero, fecha_salida, estado, desarrollador, distribuidor, plataforma, tematica,
+                      modo_juego, descripcion, comentario, clasificacion, puntuacion, id)
 
             cursor.execute(query, values)
-            a = cursor.rowcount
             self.conexion.commit()
-            print("el juego se ha actualizado exitosamente.")
+            a = cursor.rowcount
+            print("El juego se ha actualizado exitosamente.")
             cursor.close()
             return a
         except pyodbc.Error as ex:

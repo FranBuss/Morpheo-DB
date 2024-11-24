@@ -20,8 +20,13 @@ class JuegoController:
         juegos = self.servicioJuego.lista_juegos()
         return juegos
 
-    def eliminar_juego(self, id):
+    def eliminar(self, id):
         self.servicioJuego.eliminar(id)
+
+    def actualizar(self, id, nombre, genero, fecha_salida, estado, desarrollador, distribuidor, plataforma, tematica,
+              modo_juego, descripcion, comentario, clasificacion, puntuacion):
+        self.servicioJuego.actualizar(id, nombre, genero, fecha_salida, estado, desarrollador, distribuidor, plataforma, tematica,
+              modo_juego, descripcion, comentario, clasificacion, puntuacion)
 
 
 if __name__ == "__main__":
