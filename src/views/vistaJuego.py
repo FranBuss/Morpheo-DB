@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from src.controllers.JuegoController import JuegoController
 
-
 class VistaJuego:
 
     def __init__(self):
