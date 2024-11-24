@@ -6,12 +6,48 @@ from src.controllers.JuegoController import JuegoController
 class VistaJuego:
 
     def __init__(self):
+        self.popup_menu = None
         self.juegoController = JuegoController()
         self.ventana = tk.Tk()
-        self.treeview_arbol = None
-        self.treeview_tabla = None
-        self.entry_busqueda = None
+        self.ventana.title("MorpheoDB - Gestión de Juegos")
+        self.ventana.geometry("1000x600")
+        self.ventana.configure(bg='white')
+        self.estilizar()
         self.configurar_interfaz()
+        self.ventana.mainloop()
+
+
+    def estilizar(self):
+        style = ttk.Style()
+        style.configure("TButton", font=("Helvetica", 12), padding=5)
+        style.configure("TLabel", font=("Helvetica", 14), padding=5)
+        style.configure("TEntry", font=("Helvetica", 12))
+        style.configure("TFrame", background="white")
+        style.configure("Treeview", font=("Helvetica", 12), rowheight=25)
+        style.configure("Treeview.Heading", font=("Helvetica", 14, "bold"))
+
+    def mostrar_menu_contextual(self, event):
+        self.popup_menu.post(event.x_root, event.y_root)
+
+    def on_juegos_button_pressed(self):
+        self.limpiar_tabla()
+        self.listar_juegos_en_tabla()
+
+    def on_peliculas_button_pressed(self):
+        self.limpiar_tabla()
+        self.abrir_vista_peliculas()
+
+    def on_libros_button_pressed(self):
+        self.limpiar_tabla()
+        self.abrir_vista_libros()
+
+    def abrir_vista_peliculas(self):
+        self.ventana.destroy()
+        VistaPelicula()
+
+    def abrir_vista_libros(self):
+        self.ventana.destroy()
+        VistaLibro()
 
     def agregar_al_arbol(self):
         item = f"Elemento {len(self.treeview_arbol.get_children()) + 1}"
@@ -72,9 +108,13 @@ class VistaJuego:
     def listar_juegos_en_tabla(self):
         juegos = self.juegoController.listar_juegos()
         if juegos is None:
-            juegos = []  # Aseguramos que juegos no sea None
+            juegos = []
+
         for juego in juegos:
-            self.treeview_tabla.insert("", "end", values=juego[:13])
+            self.treeview_tabla.insert("", "end", values=(
+                juego[0], juego[1], juego[2], juego[3], juego[4], juego[5], juego[6], juego[7], juego[8], juego[9],
+                juego[10],
+                juego[11], juego[12], juego[13]))
 
     def mostrar_formulario_agregar(self):
         form_window = tk.Toplevel(self.ventana)
@@ -97,6 +137,10 @@ class VistaJuego:
             elif label == "Estado":
                 entry = ttk.Combobox(frame, values=["En juego", "Terminado", "Sin terminar", "Para jugar"])
                 entry.pack(fill=tk.X, expand=True)
+            elif label == "Puntuación":
+                entry = ttk.Combobox(frame, values=[str(i) for i in range(11)], state="readonly")  # Opciones de 0 a 10
+                entry.set("0")  # Valor por defecto 0
+                entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
             else:
                 entry = tk.Entry(frame)
                 entry.pack(fill=tk.X, expand=True)
@@ -104,7 +148,17 @@ class VistaJuego:
             entries[label] = entry
 
         def enviar_datos():
-            datos = [entry.get() if entry.get() else "" for entry in entries.values()]
+            datos = []
+            for label in labels:
+                if label == "Puntuación":
+                    valor_puntuacion = entries[label].get()
+                    datos.append(valor_puntuacion)
+                else:
+                    datos.append(entries[label].get() if entries[label].get() else "")
+
+            # Completar los valores predeterminados para otros campos si es necesario
+            datos = [dato if dato else "" for dato in datos]
+
             print("Datos a enviar:", datos)  # Verificar cuántos datos se están enviando
 
             try:
@@ -200,7 +254,7 @@ class VistaJuego:
         self.ventana.geometry("800x600")
 
         frame_izquierda = self.crear_frame(self.ventana, side=tk.LEFT)
-        self.crear_arbol_vista(frame_izquierda)
+        self.crear_vista_lateral(frame_izquierda)
 
         frame_derecha = self.crear_frame(self.ventana, side=tk.RIGHT)
         self.crear_tabla_vista(frame_derecha)
@@ -212,15 +266,24 @@ class VistaJuego:
         frame.pack(side=side, fill=tk.BOTH, expand=True, padx=10, pady=10)
         return frame
 
-    def crear_arbol_vista(self, frame):
-        tk.Label(frame, text="Mis listas").pack()
-        self.treeview_arbol = ttk.Treeview(frame)
-        self.treeview_arbol.pack(fill=tk.BOTH, expand=True)
+    def limpiar_tabla(self):
+        if self.treeview_tabla:
+            self.treeview_tabla.delete(*self.treeview_tabla.get_children())
 
-        frame_botones_arbol = tk.Frame(frame)
-        frame_botones_arbol.pack(pady=5)
-        tk.Button(frame_botones_arbol, text="Agregar", command=self.agregar_al_arbol).grid(row=0, column=0, padx=5)
-        tk.Button(frame_botones_arbol, text="Eliminar", command=self.eliminar_del_arbol).grid(row=0, column=1, padx=5)
+    def crear_vista_lateral(self, frame):
+        # Panel izquierdo para los botones de vistas
+        boton_frame = tk.Frame(frame)
+        boton_frame.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)
+
+        # Botones de vista
+        self.boton_juegos = tk.Button(boton_frame, text="Juegos", command=self.on_juegos_button_pressed)
+        self.boton_juegos.pack(fill=tk.X, pady=5)
+
+        self.boton_peliculas = tk.Button(boton_frame, text="Películas", command=self.on_peliculas_button_pressed)
+        self.boton_peliculas.pack(fill=tk.X, pady=5)
+
+        self.boton_libros = tk.Button(boton_frame, text="Libros", command=self.on_libros_button_pressed)
+        self.boton_libros.pack(fill=tk.X, pady=5)
 
     def crear_tabla_vista(self, frame):
         tk.Label(frame, text="Contenido de mi lista").pack()
@@ -255,17 +318,13 @@ class VistaJuego:
 
         self.listar_juegos_en_tabla()
 
-"""
-vista_juego = VistaJuego()
-frame_botones_tabla = tk.Frame(frame_derecha)
-frame_botones_tabla.pack(pady=5)
+        # Agregar menú contextual
+        self.popup_menu = tk.Menu(self.ventana, tearoff=0)
+        self.popup_menu.add_command(label="Agregar", command=self.agregar_a_la_tabla)
+        self.popup_menu.add_command(label="Modificar", command=self.modificar_en_tabla)
+        self.popup_menu.add_command(label="Eliminar", command=self.eliminar_de_la_tabla)
+        self.treeview_tabla.bind("<Button-3>", self.mostrar_menu_contextual)
 
-boton_agregar_tabla = tk.Button(frame_botones_tabla, text="Agregar", command=agregarALaTabla)
-boton_agregar_tabla.grid(row=0, column=0, padx=5)
-
-boton_eliminar_tabla = tk.Button(frame_botones_tabla, text="Eliminar", command=eliminarDeLaTabla)
-boton_eliminar_tabla.grid(row=0, column=1, padx=5)
-"""
 
 # Loop
 if __name__ == "__main__":
