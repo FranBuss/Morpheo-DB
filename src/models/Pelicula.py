@@ -1,10 +1,3 @@
-import json
-
-import pyodbc
-
-from src.configurations.DatabaseManager import DatabaseManager
-
-
 class Pelicula:
 
     def __init__(self, id, nombre, genero, fecha_estreno, duracion, pais, estado, director,

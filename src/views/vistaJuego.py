@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
+from tkcalendar import DateEntry
 from src.controllers.JuegoController import JuegoController
 
 class VistaJuego:
@@ -86,25 +87,18 @@ class VistaJuego:
             frame.pack(fill=tk.X, padx=5, pady=5)
 
             tk.Label(frame, text=label, width=15).pack(side=tk.LEFT)
-            entry = tk.Entry(frame)
-            entry.pack(fill=tk.X, expand=True)
+
+            if label == "Fecha de Salida":
+                entry = DateEntry(frame, date_pattern='dd-mm-yyyy')  # Selector de fecha
+                entry.pack(fill=tk.X, expand=True)
+            elif label == "Estado":
+                entry = ttk.Combobox(frame, values=["En juego", "Terminado", "Sin terminar", "Para jugar"])
+                entry.pack(fill=tk.X, expand=True)
+            else:
+                entry = tk.Entry(frame)
+                entry.pack(fill=tk.X, expand=True)
+
             entries[label] = entry
-
-        def enviar_datos():
-            datos = [entry.get() if entry.get() else "" for entry in entries.values()]
-            print("Datos a enviar:", datos)  # Verificar cuántos datos se están enviando
-
-            try:
-                # Pasar exactamente 14 parámetros
-                self.juegoController.create_game(*datos)
-                form_window.destroy()
-                self.refrescar_tabla()
-                messagebox.showinfo("Éxito", "El juego se ha agregado correctamente.")
-            except Exception as e:
-                messagebox.showerror("Error", f"Error al crear el juego: {e}")
-
-        boton_enviar = tk.Button(form_window, text="Agregar", command=enviar_datos)
-        boton_enviar.pack(pady=10)
 
     def configurar_interfaz(self):
         self.ventana.title("MorpheoDB")
