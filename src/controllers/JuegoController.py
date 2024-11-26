@@ -28,6 +28,14 @@ class JuegoController:
         self.servicioJuego.actualizar(id, nombre, genero, fecha_salida, estado, desarrollador, distribuidor, plataforma, tematica,
               modo_juego, descripcion, comentario, clasificacion, puntuacion)
 
+    def buscar_por_estado(self, estado):
+        juegos = self.servicioJuego.buscar_por_estado(estado)
+        return juegos
+
+    def buscar_por_nombre(self, nombre):
+        juegos = self.servicioJuego.buscar_por_nombre(nombre)
+        return juegos
+
 
 if __name__ == "__main__":
     juegos = JuegoController().listar_juegos()
