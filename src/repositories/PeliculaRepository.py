@@ -105,7 +105,7 @@ class PeliculaRepository:
 
     def buscar_por_estado(self, estado):
         cursor = self.conexion.cursor()
-        query = '''SELECT * FROM LIBROS WHERE ESTADO = ?'''
+        query = '''SELECT * FROM PELICULAS WHERE ESTADO = ?'''
         cursor.execute(query, estado)
         peliculas = cursor.fetchall()
         cursor.close()
@@ -113,7 +113,7 @@ class PeliculaRepository:
 
     def buscar_por_nombre(self, nombre):
         cursor = self.conexion.cursor()
-        query = '''SELECT * FROM LIBROS WHERE NOMBRE LIKE ?'''
+        query = '''SELECT * FROM PELICULAS WHERE NOMBRE LIKE ?'''
         parametro = f"%{nombre}%"
         cursor.execute(query, parametro)
         peliculas = cursor.fetchall()

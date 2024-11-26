@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from src.views.VistaJuego import VistaJuego  # Asegúrate de que VistaJuegos esté definida en este módulo
+from src.views.VistaJuego import VistaJuego
 
 
 class VistaMenu:
@@ -8,6 +8,7 @@ class VistaMenu:
     def __init__(self):
         self.ventana = tk.Tk()
         self.ventana.title("Menú Principal - MorpheoDB")
+        self.ventana.state('zoomed')
         self.ventana.geometry("1000x600")
         self.ventana.configure(bg='white')
         self.popup_menu = None  # Añadido

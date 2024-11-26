@@ -9,6 +9,7 @@ class VistaPelicula:
         self.ventana = tk.Tk()
         self.ventana.title("Gestionar Peliculas - MorpheoDB")
         self.ventana.geometry("1000x600")
+        self.ventana.state('zoomed')
         self.ventana.configure(bg='white')
         self.peliculaController = PeliculaController()
         self.estilizar()
@@ -17,7 +18,6 @@ class VistaPelicula:
 
     def estilizar(self):
         style = ttk.Style()
-        # Estilos para botones
         style.configure("TButton",
                         font=("Helvetica", 12),
                         padding=10,

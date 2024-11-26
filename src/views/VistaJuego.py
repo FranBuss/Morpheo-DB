@@ -12,6 +12,7 @@ class VistaJuego:
         self.juegoController = JuegoController()
         self.ventana = tk.Tk()
         self.ventana.title("MorpheoDB - Gestión de Juegos")
+        self.ventana.state('zoomed')
         self.ventana.geometry("1000x600")
         self.ventana.configure(bg='white')
         self.estilizar()
@@ -20,7 +21,6 @@ class VistaJuego:
 
     def estilizar(self):
         style = ttk.Style()
-        # Estilos para botones
         style.configure("TButton",
                         font=("Helvetica", 12),
                         padding=10,
