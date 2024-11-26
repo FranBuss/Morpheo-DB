@@ -11,6 +11,9 @@ class PeliculaRepository:
     def crear(self, nombre, genero, fecha_estreno, duracion, pais, estado, director,
     distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki):
         cursor = self.conexion.cursor()
+
+        nombre = nombre.capitalize()
+
         try:
             query = '''INSERT INTO dbo.PELICULAS(
                     NOMBRE, GENERO, FECHA_ESTRENO, DURACION, PAIS, ESTADO,
@@ -43,32 +46,19 @@ class PeliculaRepository:
     def actualizar(self, id, nombre, genero, fecha_estreno, duracion, pais, estado, director,
                 distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki):
         cursor = self.conexion.cursor()
+
+        nombre = nombre.capitalize()
+
         try:
-
-            # Revision de codigo
-            pelicula = self.buscar_pelicula_id(id)
-            nuevo_nombre = nombre if pelicula.nombre() != nombre else pelicula.nombre()
-            nuevo_genero = genero if pelicula.genero() != genero else pelicula.genero()
-            nueva_fecha_estreno = fecha_estreno if pelicula.fecha_estreno() != fecha_estreno else pelicula.fecha_estreno()
-            nuevo_duracion = duracion if pelicula.duracion() != duracion else pelicula.duracion()
-            nuevo_pais = pais if pelicula.pais() != pais else pelicula.pais()
-            nuevo_estado = estado if pelicula.estado() != estado else pelicula.estado()
-            nuevo_director = director if pelicula.director() != director else pelicula.director()
-            nuevo_distribuidor = distribuidor if pelicula.distribuidor() != distribuidor else pelicula.distribuidor()
-            nuevo_estudio = estudio if pelicula.estudio() != estudio else pelicula.estudio()
-            nuevo_plataforma = plataforma if pelicula.plataforma() != plataforma else pelicula.plataforma()
-            nuevo_descripcion = descripcion if pelicula.descripcion() != descripcion else pelicula.descripcion()
-            nuevo_comentario = comentario if pelicula.comentario() != comentario else pelicula.comentario()
-            nuevo_puntuacion = puntuacion if pelicula.puntuacion() != puntuacion else pelicula.puntuacion()
-            nuevo_calificacion = calificacion if pelicula.calificacion() != calificacion else pelicula.calificacion()
-            nuevo_wiki = wiki if pelicula.wiki() != wiki else pelicula.wiki()
-
-            query = '''UPDATE dbo.PELICULAS SET NOMBRE = '?', GENERO = '?', FECHA_ESTRENO = '?', 
-                        DURACION = ?, PAIS = '?', ESTADO = ?, DIRECTOR = '?', DISTRIBUIDOR = '?', ESTUDIO = '?',
-                        PLATAFORMA = ?, DESCRIPCION = '?', COMENTARIO = '?', CALIFICACION = ?, PUNTUACION = ?, WIKI = ?'''
-            values = (nuevo_nombre, nuevo_genero, nueva_fecha_estreno, nuevo_duracion, nuevo_pais, nuevo_estado,
-                    nuevo_director, nuevo_distribuidor, nuevo_estudio, nuevo_plataforma, nuevo_descripcion,
-                    nuevo_comentario, nuevo_calificacion, nuevo_puntuacion, nuevo_wiki)
+            query = '''
+                    UPDATE dbo.PELICULAS 
+                    SET NOMBRE = ?, GENERO = ?, FECHA_ESTRENO = ?, DURACION = ?, PAIS = ?, ESTADO = ?, 
+                        DIRECTOR = ?, DISTRIBUIDOR = ?, ESTUDIO = ?, PLATAFORMA = ?, DESCRIPCION = ?, 
+                        COMENTARIO = ?, CALIFICACION = ?, PUNTUACION = ?, WIKI = ?
+                    WHERE ID = ?
+                    '''
+            values = (nombre, genero, fecha_estreno, duracion, pais, estado, director,
+                distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki, id)
             
             cursor.execute(query, values)
             a = cursor.rowcount
@@ -112,3 +102,20 @@ class PeliculaRepository:
             return pelicula
         else:
             return None
+
+    def buscar_por_estado(self, estado):
+        cursor = self.conexion.cursor()
+        query = '''SELECT * FROM LIBROS WHERE ESTADO = ?'''
+        cursor.execute(query, estado)
+        peliculas = cursor.fetchall()
+        cursor.close()
+        return peliculas
+
+    def buscar_por_nombre(self, nombre):
+        cursor = self.conexion.cursor()
+        query = '''SELECT * FROM LIBROS WHERE NOMBRE LIKE ?'''
+        parametro = f"%{nombre}%"
+        cursor.execute(query, parametro)
+        peliculas = cursor.fetchall()
+        cursor.close()
+        return peliculas

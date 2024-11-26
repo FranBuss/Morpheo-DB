@@ -2,10 +2,10 @@ import tkinter as tk
 from tkinter import ttk
 
 
-class VistaPelicula:
+class VistaLibro:
     def __init__(self):
         self.ventana = tk.Tk()
-        self.ventana.title("Gestionar Películas - MorpheoDB")
+        self.ventana.title("Gestionar Libros - MorpheoDB")
         self.ventana.geometry("1000x600")
         self.ventana.configure(bg='white')
 
@@ -23,3 +23,6 @@ class VistaPelicula:
     def configurar_interfaz(self):
         # Aquí definimos la interfaz específica para gestión de películas
         pass
+
+if __name__ == "__main__":
+    VistaLibro()

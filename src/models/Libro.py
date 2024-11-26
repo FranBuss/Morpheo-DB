@@ -1,11 +1,12 @@
 class Libro:
 
-    def __init__(self, id, nombre, estado, genero, editorial, fecha_publicacion, pagina_actual, 
+    def __init__(self, id, nombre, estado, genero, autor, editorial, fecha_publicacion, pagina_actual,
                 cant_paginas, descripcion, clasificacion, puntuacion, wiki):
         self.__id = id
         self.__nombre = nombre
         self.__estado = estado
         self.__genero = genero
+        self.__autor = autor
         self.__editorial = editorial
         self.__fecha_publicacion = fecha_publicacion
         self.__pagina_actual = pagina_actual
@@ -46,6 +47,14 @@ class Libro:
     @genero.setter
     def genero(self, value):
         self.__genero = value
+
+    @property
+    def autor(self):
+        return self.__autor
+
+    @autor.setter
+    def id(self, value):
+        self.__autor = value
 
     @property
     def editorial(self):

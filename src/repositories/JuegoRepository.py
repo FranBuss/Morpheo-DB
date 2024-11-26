@@ -11,6 +11,9 @@ class JuegoRepository:
     def crear(self, nombre, genero, fecha_salida, estado, desarrollador, distribuidor, plataforma, tematica,
             modo_juego, descripcion, comentario, clasificacion, puntuacion):
         cursor = self.conexion.cursor()
+
+        nombre = nombre.capitalize()
+
         try:
             query = '''INSERT INTO dbo.JUEGOS(
                             NOMBRE, GENERO, FECHA_SALIDA, ESTADO, DESARROLLADOR, 
@@ -44,6 +47,9 @@ class JuegoRepository:
     def actualizar(self, id, nombre, genero, fecha_salida, estado, desarrollador, distribuidor, plataforma, tematica,
                    modo_juego, descripcion, comentario, clasificacion, puntuacion):
         cursor = self.conexion.cursor()
+
+        nombre = nombre.capitalize()
+
         try:
             query = '''UPDATE dbo.JUEGOS SET 
                         NOMBRE = ?, GENERO = ?, FECHA_SALIDA = ?, ESTADO = ?, 
@@ -98,4 +104,19 @@ class JuegoRepository:
         else:
             return None
 
+    def buscar_por_estado(self, estado):
+        cursor = self.conexion.cursor()
+        query = '''SELECT * FROM JUEGOS WHERE ESTADO = ?'''
+        cursor.execute(query, estado)
+        juegos = cursor.fetchall()
+        cursor.close()
+        return juegos
 
+    def buscar_por_nombre(self, nombre):
+        cursor = self.conexion.cursor()
+        query = '''SELECT * FROM JUEGOS WHERE NOMBRE LIKE ?'''
+        parametro = f"%{nombre}%"
+        cursor.execute(query, parametro)
+        juegos = cursor.fetchall()
+        cursor.close()
+        return juegos

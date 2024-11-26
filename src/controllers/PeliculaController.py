@@ -1,5 +1,4 @@
 from src.services.PeliculaService import ServicioPelicula
-from src.models.Pelicula import Pelicula
 
 
 class PeliculaController:
@@ -16,7 +15,19 @@ class PeliculaController:
         pelicula = self.servicioPelicula.buscar_pelicula_id(id)
         return pelicula
 
+    def listar_peliculas(self):
+        return self.servicioPelicula.lista_peliculas()
 
-if __name__ == "__main__":
+    def eliminar(self, id):
+        self.servicioPelicula.eliminar(id)
 
-    PeliculaController().create_movie("SHREK")
+    def actualizar(self, id, nombre, genero, fecha_estreno, duracion, pais, estado, director,
+    distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki):
+        self.servicioPelicula.actualizar(id, nombre, genero, fecha_estreno, duracion, pais, estado, director,
+    distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki)
+
+    def buscar_por_estado(self, estado):
+        self.servicioPelicula.buscar_por_estado(estado)
+
+    def buscar_por_nombre(self, nombre):
+        self.servicioPelicula.buscar_por_nombre(nombre)

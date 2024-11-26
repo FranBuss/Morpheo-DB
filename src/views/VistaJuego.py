@@ -3,9 +3,11 @@ from tkinter import ttk, messagebox
 from tkcalendar import DateEntry
 from src.controllers.JuegoController import JuegoController
 
+
 class VistaJuego:
 
     def __init__(self):
+        self.treeview_tabla = None
         self.popup_menu = None
         self.juegoController = JuegoController()
         self.ventana = tk.Tk()
@@ -16,15 +18,27 @@ class VistaJuego:
         self.configurar_interfaz()
         self.ventana.mainloop()
 
-
     def estilizar(self):
         style = ttk.Style()
-        style.configure("TButton", font=("Helvetica", 12), padding=5)
-        style.configure("TLabel", font=("Helvetica", 14), padding=5)
-        style.configure("TEntry", font=("Helvetica", 12))
-        style.configure("TFrame", background="white")
-        style.configure("Treeview", font=("Helvetica", 12), rowheight=25)
-        style.configure("Treeview.Heading", font=("Helvetica", 14, "bold"))
+        # Estilos para botones
+        style.configure("TButton",
+                        font=("Helvetica", 12),
+                        padding=10,
+                        borderwidth=3,
+                        relief="raised",
+                        background="#004080",
+                        foreground="black")
+        style.map("TButton",
+                  foreground=[('pressed', 'white'), ('active', '#3399ff')],
+                  background=[('pressed', '!disabled', '#004080'), ('active', '#0059b3')])
+
+        # Estilos para etiquetas
+        style.configure("TLabel", font=("Helvetica", 16), padding=10, background='#f2f2f2', foreground="#333333")
+        style.configure("TEntry", font=("Helvetica", 12), padding=5)
+        style.configure("TFrame", background="#f2f2f2")
+
+    def aplicar_estilo_boton(self, boton):
+        boton.config(style="TButton")
 
     def mostrar_menu_contextual(self, event):
         self.popup_menu.post(event.x_root, event.y_root)
@@ -42,23 +56,29 @@ class VistaJuego:
         self.abrir_vista_libros()
 
     def abrir_vista_peliculas(self):
+        from src.views.VistaPelicula import VistaPelicula
         self.ventana.destroy()
         VistaPelicula()
 
     def abrir_vista_libros(self):
+        from src.views.VistaLibro import VistaLibro
         self.ventana.destroy()
         VistaLibro()
 
-    def agregar_al_arbol(self):
-        item = f"Elemento {len(self.treeview_arbol.get_children()) + 1}"
-        self.treeview_arbol.insert("", "end", text=item)
+    def busqueda_por_estado(self, estado):
+        juegos = self.juegoController.buscar_por_estado(estado)
+        if juegos is None:
+            juegos = []
 
-    def eliminar_del_arbol(self):
-        selected_item = self.treeview_arbol.selection()
-        if selected_item:
-            self.treeview_arbol.delete(selected_item)
-        else:
-            messagebox.showwarning("Atenti!", "Seleccioná un elemento para eliminar.")
+        for juego in juegos:
+            self.treeview_tabla.insert("", "end", values=(
+                juego[0], juego[1], juego[2], juego[3], juego[4], juego[5], juego[6], juego[7], juego[8], juego[9],
+                juego[10],
+                juego[11], juego[12], juego[13]))
+
+    def busqueda_limpia_por_estado(self, estado):
+        self.limpiar_tabla()
+        self.busqueda_por_estado(estado)
 
     def agregar_a_la_tabla(self):
         self.mostrar_formulario_agregar()
@@ -88,15 +108,17 @@ class VistaJuego:
         except Exception as e:
             messagebox.showerror("Error", f"Error al eliminar el juego: {e}")
 
-    def buscar_en_tabla(self):
-        query = self.entry_busqueda.get().lower()
-        for row in self.treeview_tabla.get_children():
-            values = self.treeview_tabla.item(row, "values")
-            if query in " ".join(values).lower():
-                self.treeview_tabla.selection_set(row)
-                self.treeview_tabla.see(row)
-                return
-        messagebox.showinfo("Búsqueda", f"No se encontró '{query}' en la tabla.")
+    def buscar_en_tabla(self, nombre):
+        resultado = self.juegoController.buscar_por_nombre(nombre)
+        if resultado:
+            self.treeview_tabla.delete(*self.treeview_tabla.get_children())  # Limpiar tabla actual
+            for juego in resultado:
+                self.treeview_tabla.insert("", "end", values=(
+                    juego[0], juego[1], juego[2], juego[3], juego[4], juego[5], juego[6], juego[7], juego[8], juego[9],
+                    juego[10], juego[11], juego[12], juego[13]))
+            print("Búsqueda completada y tabla actualizada con resultados.")
+        else:
+            print("No se encontraron resultados para la búsqueda.")
 
     def refrescar_tabla(self):
         # Limpiar todos los elementos del Treeview
@@ -271,29 +293,60 @@ class VistaJuego:
             self.treeview_tabla.delete(*self.treeview_tabla.get_children())
 
     def crear_vista_lateral(self, frame):
+        frame.config(width=400, height=600, padx=20, pady=20)
+        label_menu = ttk.Label(frame, text="Menú", font=("Helvetica", 20), style="TLabel")
+        label_menu.pack(pady=20)
+
         # Panel izquierdo para los botones de vistas
-        boton_frame = tk.Frame(frame)
+        boton_frame = ttk.Frame(frame)  # Asegúrate de que sea ttk.Frame si usas ttk
         boton_frame.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)
 
         # Botones de vista
-        self.boton_juegos = tk.Button(boton_frame, text="Juegos", command=self.on_juegos_button_pressed)
-        self.boton_juegos.pack(fill=tk.X, pady=5)
+        self.boton_juegos = ttk.Button(boton_frame, text="Juegos", command=self.on_juegos_button_pressed, width=20)
+        self.boton_juegos.pack(pady=10, padx=10)
+        self.aplicar_estilo_boton(self.boton_juegos)
 
-        self.boton_peliculas = tk.Button(boton_frame, text="Películas", command=self.on_peliculas_button_pressed)
-        self.boton_peliculas.pack(fill=tk.X, pady=5)
+        self.boton_peliculas = ttk.Button(boton_frame, text="Películas", command=self.on_peliculas_button_pressed,
+                                          width=20)
+        self.boton_peliculas.pack(pady=10, padx=10)
+        self.aplicar_estilo_boton(self.boton_peliculas)
 
-        self.boton_libros = tk.Button(boton_frame, text="Libros", command=self.on_libros_button_pressed)
-        self.boton_libros.pack(fill=tk.X, pady=5)
+        self.boton_libros = ttk.Button(boton_frame, text="Libros", command=self.on_libros_button_pressed, width=20)
+        self.boton_libros.pack(pady=10, padx=10)
+        self.aplicar_estilo_boton(self.boton_libros)
 
     def crear_tabla_vista(self, frame):
-        tk.Label(frame, text="Contenido de mi lista").pack()
+        tk.Label(frame, text="JUEGOS").pack()
 
-        frame_busqueda = tk.Frame(frame)
-        frame_busqueda.pack(fill=tk.X, pady=5)
+        estados_juego = ["TODOS" ,"En juego", "Terminado", "Sin terminar", "Para jugar"]
 
-        self.entry_busqueda = tk.Entry(frame_busqueda)
-        self.entry_busqueda.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
-        tk.Button(frame_busqueda, text="Buscar", command=self.buscar_en_tabla).pack(side=tk.RIGHT, padx=5)
+        # Frame contenedor para los botones y la barra de búsqueda
+        frame_superior = ttk.Frame(frame)
+        frame_superior.pack(side=tk.TOP, fill=tk.X, padx=10, pady=10)
+
+        # Frame para los botones
+        frame_botones = ttk.Frame(frame_superior)
+        frame_botones.pack(side=tk.LEFT)
+
+        # Crear botones para cada estado del juego
+        for estado in estados_juego:
+            if estado == "TODOS":
+                btn = ttk.Button(frame_botones, text=estado,
+                                 command=self.refrescar_tabla)
+            else:
+                btn = ttk.Button(frame_botones, text=estado,
+                                 command=lambda x=estado: self.busqueda_limpia_por_estado(x))
+            btn.pack(side=tk.LEFT, padx=5)
+
+        # Frame para la barra de búsqueda
+        frame_busqueda = ttk.Frame(frame_superior)
+        frame_busqueda.pack(side=tk.RIGHT, padx=5)
+
+        self.entry_busqueda = ttk.Entry(frame_busqueda)
+        self.entry_busqueda.pack(side=tk.LEFT, padx=5)
+
+        btn_buscar = ttk.Button(frame_busqueda, text="Buscar", command=lambda: self.buscar_en_tabla(self.entry_busqueda.get()))
+        btn_buscar.pack(side=tk.LEFT, padx=5)
 
         columnas = ["ID", "Nombre", "Género", "Fecha de Salida", "Estado", "Desarrollador", "Distribuidor",
                     "Plataforma",

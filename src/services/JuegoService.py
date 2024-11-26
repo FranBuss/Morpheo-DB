@@ -1,6 +1,4 @@
-import pyodbc
 from src.repositories.JuegoRepository import  JuegoRepository
-from src.models.Juego import Juego
 
 
 class ServicioJuego:
@@ -28,3 +26,8 @@ class ServicioJuego:
     def buscar_juego_id(self, id):
         return self.juegoRepository.buscar_juego_id(id)
 
+    def buscar_por_estado(self, estado):
+        return self.juegoRepository.buscar_por_estado(estado)
+
+    def buscar_por_nombre(self, nombre):
+        return self.juegoRepository.buscar_por_nombre(nombre)

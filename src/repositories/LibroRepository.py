@@ -8,16 +8,19 @@ class LibroRepository:
     def __init__(self):
         self.conexion = pyodbc.connect(f"DRIVER={DRIVER};SERVER={SERVER};DATABASE={DATABASE}")
 
-    def crear(self, id, nombre, estado, genero, editorial, fecha_publicacion, pagina_actual, 
+    def crear(self, id, nombre, estado, genero, autor, editorial, fecha_publicacion, pagina_actual,
                 cant_paginas, descripcion, clasificacion, puntuacion, wiki):
         cursor = self.conexion.cursor()
+
+        nombre = nombre.capitalize()
+
         try:
             query = '''INSERT INTO dbo.LIBROS(
-                        NOMBRE, ESTADO, GENERO, EDITORIAL, 
+                        NOMBRE, ESTADO, GENERO, AUTOR, EDITORIAL, 
                         FECHA_PUBLICACION, PAGINA_ACTUAL, CANT_PAGINAS,
                         DESCRIPCION, CLASIFICACION, PUNTUACION, WIKI
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
-            values = (self, id, nombre, estado, genero, editorial, 
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+            values = (self, id, nombre, estado, genero, autor,editorial,
                       fecha_publicacion, pagina_actual, cant_paginas,
                     descripcion, clasificacion, puntuacion, wiki)
             cursor.execute(query, values)
@@ -38,31 +41,18 @@ class LibroRepository:
         except pyodbc.Error as ex:
             print("Error al borrar el libro: ", ex)
 
-    def actualizar(self, id, nombre, estado, genero, editorial, fecha_publicacion, pagina_actual, 
+    def actualizar(self, id, nombre, estado, genero, autor, editorial, fecha_publicacion, pagina_actual,
                 cant_paginas, descripcion, clasificacion, puntuacion, wiki):
         cursor = self.conexion.cursor()
+
+        nombre = nombre.capitalize()
+
         try:
-
-            # Revision de codigo
-            libro = self.buscar_libro_id(id)
-            nuevo_nombre = nombre if libro.nombre() != nombre else libro.nombre()
-            nuevo_estado = estado if libro.estado() != estado else libro.estado()
-            nuevo_genero = genero if libro.genero() != genero else libro.genero()
-            nuevo_editorial = editorial if libro.editorial() != editorial else libro.editorial()
-            nueva_fecha_publicacion = fecha_publicacion if libro.fecha_publicacion() != fecha_publicacion else libro.fecha_publicacion()
-            nueva_pagina_actual = pagina_actual if libro.pagina_actual() != pagina_actual else libro.pagina_actual()
-            nueva_cant_paginas = cant_paginas if libro.cant_paginas() != cant_paginas else libro.cant_paginas()
-            nuevo_descripcion = descripcion if libro.descripcion() != descripcion else libro.descripcion()
-            nuevo_clasificacion = clasificacion if libro.clasificacion() != clasificacion else libro.clasificacion()
-            nuevo_puntuacion = puntuacion if libro.puntuacion() != puntuacion else libro.puntuacion()
-            nuevo_wiki = wiki if libro.wiki() != wiki else libro.wiki()
-
-            query = '''UPDATE dbo.LIBROS SET NOMBRE = '?',ESTADO = '?', GENERO = '?', EDITORIAL = '?', 
-                        FECHA_PUBLICACION = '?', PAGINA_ACTUAL = '?', CANT_PAGINAS = '?',
-                        DESCRIPCION = '?', CLASIFICACION = '?', PUNTUACION = '?', WIKI = '?'''
-            values = (nuevo_nombre, nuevo_estado, nuevo_genero, nuevo_editorial,
-                      nueva_fecha_publicacion, nueva_pagina_actual, nueva_cant_paginas,
-                    nuevo_descripcion, nuevo_clasificacion, nuevo_puntuacion, nuevo_wiki)
+            query = '''UPDATE dbo.LIBROS SET NOMBRE = ?, ESTADO = ?, GENERO = ?, AUTOR = ?, EDITORIAL = ?, 
+                               FECHA_PUBLICACION = ?, PAGINA_ACTUAL = ?, CANT_PAGINAS = ?, 
+                               DESCRIPCION = ?, CLASIFICACION = ?, PUNTUACION = ?, WIKI = ? WHERE ID = ?'''
+            values = (nombre, estado, genero, autor, editorial, fecha_publicacion, pagina_actual,
+                cant_paginas, descripcion, clasificacion, puntuacion, wiki, id)
 
             cursor.execute(query, values)
             a = cursor.rowcount
@@ -108,3 +98,20 @@ class LibroRepository:
             return libro
         else:
             return None
+
+    def buscar_por_estado(self, estado):
+        cursor = self.conexion.cursor()
+        query = '''SELECT * FROM LIBROS WHERE ESTADO = ?'''
+        cursor.execute(query, estado)
+        libros = cursor.fetchall()
+        cursor.close()
+        return libros
+
+    def buscar_por_nombre(self, nombre):
+        cursor = self.conexion.cursor()
+        query = '''SELECT * FROM LIBROS WHERE NOMBRE LIKE ?'''
+        parametro = f"%{nombre}%"
+        cursor.execute(query, parametro)
+        libros = cursor.fetchall()
+        cursor.close()
+        return libros

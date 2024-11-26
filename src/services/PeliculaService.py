@@ -1,6 +1,5 @@
 import pyodbc
 from src.repositories.PeliculaRepository import  PeliculaRepository
-from src.models.Pelicula import Pelicula
 
 
 class ServicioPelicula:
@@ -11,18 +10,25 @@ class ServicioPelicula:
 
     def crear(self, nombre, genero, fecha_estreno, duracion, pais, estado, director,
     distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki):
-        self.PeliculaRepository.crear(self, nombre, genero, fecha_estreno, duracion, pais, estado, director,
+        self.peliculaRepository.crear(nombre, genero, fecha_estreno, duracion, pais, estado, director,
     distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki)
 
-    def eliminar(self, nombre):
-        pass
+    def eliminar(self, id):
+        self.peliculaRepository.eliminar(id)
 
-    def actualizar(self, nombre, genero):
-        pass
+    def actualizar(self, nombre, genero, fecha_estreno, duracion, pais, estado, director,
+    distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki):
+        self.peliculaRepository.actualizar(nombre, genero, fecha_estreno, duracion, pais, estado, director,
+    distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki)
 
     def lista_peliculas(self):
-        pass
+        return self.peliculaRepository.lista_peliculas()
 
     def buscar_pelicula_id(self, id):
         return self.peliculaRepository.buscar_pelicula_id(id)
 
+    def buscar_por_estado(self, estado):
+        return self.peliculaRepository.buscar_por_estado(estado)
+
+    def buscar_por_nombre(self, nombre):
+        return self.peliculaRepository.buscar_por_nombre(nombre)

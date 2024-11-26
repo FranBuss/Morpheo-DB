@@ -19,130 +19,130 @@ class Pelicula:
         self.__calificacion = calificacion
         self.__wiki = wiki
 
-        @property
-        def id(self):
-            return self.__id
+    @property
+    def id(self):
+        return self.__id
 
-        @id.setter
-        def id(self, value):
-            self.__id = value
+    @id.setter
+    def id(self, value):
+        self.__id = value
 
-        @property
-        def nombre(self):
-            return self.__nombre
+    @property
+    def nombre(self):
+        return self.__nombre
 
-        @nombre.setter
-        def nombre(self, value):
-            self.__nombre = value
+    @nombre.setter
+    def nombre(self, value):
+        self.__nombre = value
 
-        @property
-        def genero(self):
-            return self.__genero
+    @property
+    def genero(self):
+        return self.__genero
 
-        @genero.setter
-        def genero(self, value):
-            self.__genero = value
+    @genero.setter
+    def genero(self, value):
+        self.__genero = value
 
-        @property
-        def fecha_estreno(self):
-            return self.__fecha_estreno
+    @property
+    def fecha_estreno(self):
+        return self.__fecha_estreno
 
-        @fecha_estreno.setter
-        def fecha_estreno(self, value):
-            self.__fecha_estreno = value
+    @fecha_estreno.setter
+    def fecha_estreno(self, value):
+        self.__fecha_estreno = value
 
-        @property
-        def duracion(self):
-            return self.__duracion
+    @property
+    def duracion(self):
+        return self.__duracion
 
-        @duracion.setter
-        def duracion(self, value):
-            self.__duracion = value
+    @duracion.setter
+    def duracion(self, value):
+        self.__duracion = value
 
-        @property
-        def pais(self):
-            return self.__pais
+    @property
+    def pais(self):
+        return self.__pais
 
-        @pais.setter
-        def pais(self, value):
-            self.__pais = value
+    @pais.setter
+    def pais(self, value):
+        self.__pais = value
 
-        @property
-        def estado(self):
-            return self.__estado
+    @property
+    def estado(self):
+        return self.__estado
 
-        @estado.setter
-        def estado(self, value):
-            self.__estado = value
-        
-        @property
-        def director(self):
-            return self.__director
+    @estado.setter
+    def estado(self, value):
+        self.__estado = value
 
-        @director.setter
-        def director(self, value):
-            self.__director = value
-        
-        @property
-        def distribuidor(self):
-            return self.__distribuidor
+    @property
+    def director(self):
+        return self.__director
 
-        @distribuidor.setter
-        def distribuidor(self, value):
-            self.__distribuidor = value
-        
-        @property
-        def estudio(self):
-            return self.__estudio
+    @director.setter
+    def director(self, value):
+        self.__director = value
 
-        @estudio.setter
-        def estudio(self, value):
-            self.__estudio = value
-        
-        @property
-        def plataforma(self):
-            return self.__plataforma
+    @property
+    def distribuidor(self):
+        return self.__distribuidor
 
-        @plataforma.setter
-        def plataforma(self, value):
-            self.__plataforma = value
+    @distribuidor.setter
+    def distribuidor(self, value):
+        self.__distribuidor = value
 
-        @property
-        def descripcion(self):
-            return self.__descripcion
+    @property
+    def estudio(self):
+        return self.__estudio
 
-        @descripcion.setter
-        def descripcion(self, value):
-            self.__descripcion = value
+    @estudio.setter
+    def estudio(self, value):
+        self.__estudio = value
 
-        @property
-        def comentario(self):
-            return self.__comentario
+    @property
+    def plataforma(self):
+        return self.__plataforma
 
-        @comentario.setter
-        def comentario(self, value):
-            self.__comentario = value
+    @plataforma.setter
+    def plataforma(self, value):
+        self.__plataforma = value
 
-        @property
-        def puntuacion(self):
-            return self.__puntuacion
+    @property
+    def descripcion(self):
+        return self.__descripcion
 
-        @puntuacion.setter
-        def puntuacion(self, value):
-            self.__puntuacion = value
+    @descripcion.setter
+    def descripcion(self, value):
+        self.__descripcion = value
 
-        @property
-        def calificacion(self):
-            return self.__calificacion
+    @property
+    def comentario(self):
+        return self.__comentario
 
-        @calificacion.setter
-        def calificacion(self, value):
-            self.__calificacion = value
+    @comentario.setter
+    def comentario(self, value):
+        self.__comentario = value
 
-        @property
-        def wiki(self):
-            return self.__wiki
+    @property
+    def puntuacion(self):
+        return self.__puntuacion
 
-        @wiki.setter
-        def wiki(self, value):
-            self.__wiki = value
+    @puntuacion.setter
+    def puntuacion(self, value):
+        self.__puntuacion = value
+
+    @property
+    def calificacion(self):
+        return self.__calificacion
+
+    @calificacion.setter
+    def calificacion(self, value):
+        self.__calificacion = value
+
+    @property
+    def wiki(self):
+        return self.__wiki
+
+    @wiki.setter
+    def wiki(self, value):
+        self.__wiki = value
