@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 
 from src.controllers.GeneralController import GeneralController
 from src.controllers.JuegoController import JuegoController
@@ -148,25 +148,27 @@ class VistaGeneral:
         for child in frame_principal.winfo_children():
             child.grid_configure(pady=5, padx=5)
 
-    def busqueda_por_estado(self, estado):
-        juegos = self.juegoController.buscar_por_estado(estado)
-        if juegos is None:
-            juegos = []
+    def busqueda_por_puntuacion(self, puntuacion):
+        resultado = self.generalController.buscar_por_puntuacion(puntuacion)
+        if resultado is None:
+            resultado = []
 
-        for i, juego in enumerate(juegos):
-            # Determinar si la fila es par o impar
+        for i, objeto in enumerate(resultado):
+            values = (objeto[0], objeto[1], objeto[2], objeto[3], objeto[4])
             if i % 2 == 0:
-                self.treeview_tabla.insert("", "end", values=(
-                    juego[0], juego[1], juego[2], juego[3], juego[4], juego[5], juego[6], juego[7], juego[8], juego[9],
-                    juego[10], juego[11], juego[12], juego[13]), tags=('evenrow',))
+                self.treeview_tabla.insert("", "end", values=values, tags=('evenrow',))
             else:
-                self.treeview_tabla.insert("", "end", values=(
-                    juego[0], juego[1], juego[2], juego[3], juego[4], juego[5], juego[6], juego[7], juego[8], juego[9],
-                    juego[10], juego[11], juego[12], juego[13]), tags=('oddrow',))
+                self.treeview_tabla.insert("", "end", values=values, tags=('oddrow',))
 
-    def busqueda_limpia_por_estado(self, estado):
-        self.limpiar_tabla()
-        self.busqueda_por_estado(estado)
+    def busqueda_limpia_por_puntuacion(self, puntuacion):
+        try:
+            puntuacion = int(puntuacion)
+            if puntuacion < 0 or puntuacion > 10:
+                raise ValueError("La puntuación debe estar entre 0 y 10")
+            self.limpiar_tabla()
+            self.busqueda_por_puntuacion(puntuacion)
+        except ValueError as e:
+            messagebox.showerror("Error", str(e))
 
     def buscar_en_tabla(self, nombre):
         resultado = self.generalController.buscar_por_nombre(nombre)
@@ -394,10 +396,17 @@ class VistaGeneral:
             if estado == "TODOS":
                 btn = ttk.Button(frame_botones, text=estado,
                                  command=self.refrescar_tabla)
-            else:
-                btn = ttk.Button(frame_botones, text=estado,
-                                 command=lambda x=estado: self.busqueda_limpia_por_estado(x))
             btn.pack(side=tk.LEFT, padx=5)
+
+        # Frame para la búsqueda por puntuación
+        frame_busqueda_puntuacion = ttk.Frame(frame_superior)
+        frame_busqueda_puntuacion.pack(side=tk.RIGHT, padx=5)
+        self.entry_puntuacion = ttk.Entry(frame_busqueda_puntuacion, width=5)
+        self.entry_puntuacion.pack(side=tk.LEFT, padx=5)
+        btn_buscar_puntuacion = ttk.Button(frame_busqueda_puntuacion, text="Buscar por Puntuación",
+                                           command=lambda: self.busqueda_limpia_por_puntuacion(
+                                               self.entry_puntuacion.get()))
+        btn_buscar_puntuacion.pack(side=tk.LEFT, padx=5)
 
         # Frame para la barra de búsqueda
         frame_busqueda = ttk.Frame(frame_superior)
