@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 from src.views.VistaJuego import VistaJuego
+from src.views.VistaPelicula import VistaPelicula
+from src.views.VistaLibro import VistaLibro
 
 
 class VistaMenu:

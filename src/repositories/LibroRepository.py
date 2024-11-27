@@ -8,21 +8,18 @@ class LibroRepository:
     def __init__(self):
         self.conexion = pyodbc.connect(f"DRIVER={DRIVER};SERVER={SERVER};DATABASE={DATABASE}")
 
-    def crear(self, id, nombre, estado, genero, autor, editorial, fecha_publicacion, pagina_actual,
-                cant_paginas, descripcion, clasificacion, puntuacion, wiki):
+    def crear(self, nombre, estado, genero, autor, editorial, fecha_publicacion, pagina_actual,
+              cant_paginas, descripcion, clasificacion, puntuacion, wiki):
         cursor = self.conexion.cursor()
-
         nombre = nombre.capitalize()
-
         try:
             query = '''INSERT INTO dbo.LIBROS(
                         NOMBRE, ESTADO, GENERO, AUTOR, EDITORIAL, 
                         FECHA_PUBLICACION, PAGINA_ACTUAL, CANT_PAGINAS,
                         DESCRIPCION, CLASIFICACION, PUNTUACION, WIKI
                         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
-            values = (self, id, nombre, estado, genero, autor,editorial,
-                      fecha_publicacion, pagina_actual, cant_paginas,
-                    descripcion, clasificacion, puntuacion, wiki)
+            values = (nombre, estado, genero, autor, editorial, fecha_publicacion, pagina_actual,
+                      cant_paginas, descripcion, clasificacion, puntuacion, wiki)
             cursor.execute(query, values)
             self.conexion.commit()
             print("Libro creado correctamente.")

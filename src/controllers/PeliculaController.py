@@ -27,7 +27,7 @@ class PeliculaController:
     distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki)
 
     def buscar_por_estado(self, estado):
-        self.servicioPelicula.buscar_por_estado(estado)
+        return self.servicioPelicula.buscar_por_estado(estado)
 
     def buscar_por_nombre(self, nombre):
-        self.servicioPelicula.buscar_por_nombre(nombre)
+        return self.servicioPelicula.buscar_por_nombre(nombre)

@@ -99,10 +99,10 @@ class VistaJuego:
             messagebox.showerror("Error", "El elemento seleccionado no tiene valores.")
             return
 
-        game_id = values[0]  # Asumimos que el ID es el primer valor
+        id = values[0]  # Asumimos que el ID es el primer valor
 
         try:
-            self.juegoController.eliminar(game_id)  # Llama a un método para eliminar el juego en el controlador
+            self.juegoController.eliminar(id)  # Llama a un método para eliminar el juego en el controlador
             self.treeview_tabla.delete(selected_item)  # Elimina de la vista
             messagebox.showinfo("Éxito", "El juego se ha eliminado correctamente.")
         except Exception as e:

@@ -113,7 +113,7 @@ class PeliculaRepository:
 
     def buscar_por_nombre(self, nombre):
         cursor = self.conexion.cursor()
-        query = '''SELECT * FROM PELICULAS WHERE NOMBRE LIKE ?'''
+        query = '''SELECT * FROM dbo.PELICULAS WHERE NOMBRE LIKE ?'''
         parametro = f"%{nombre}%"
         cursor.execute(query, parametro)
         peliculas = cursor.fetchall()

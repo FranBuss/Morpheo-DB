@@ -58,92 +58,6 @@ class VistaPelicula:
         if self.treeview_tabla:
             self.treeview_tabla.delete(*self.treeview_tabla.get_children())
 
-    def crear_vista_lateral(self, frame):
-        frame.config(width=400, height=600, padx=20, pady=20)
-        label_menu = ttk.Label(frame, text="Menú", font=("Helvetica", 20), style="TLabel")
-        label_menu.pack(pady=20)
-
-        # Panel izquierdo para los botones de vistas
-        boton_frame = ttk.Frame(frame)
-        boton_frame.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)
-
-        # Botones de vista
-        self.boton_juegos = ttk.Button(boton_frame, text="Juegos", command=self.on_juegos_button_pressed, width=20)
-        self.boton_juegos.pack(pady=10, padx=10)
-        self.aplicar_estilo_boton(self.boton_juegos)
-
-        self.boton_peliculas = ttk.Button(boton_frame, text="Películas", command=self.on_peliculas_button_pressed,
-                                          width=20)
-        self.boton_peliculas.pack(pady=10, padx=10)
-        self.aplicar_estilo_boton(self.boton_peliculas)
-
-        self.boton_libros = ttk.Button(boton_frame, text="Libros", command=self.on_libros_button_pressed, width=20)
-        self.boton_libros.pack(pady=10, padx=10)
-        self.aplicar_estilo_boton(self.boton_libros)
-
-    def crear_tabla_vista(self, frame):
-        tk.Label(frame, text="PELICULAS").pack()
-
-        estados = ["TODOS" ,"Para ver", "Visto", "Sin ver", "Sin terminar"]
-
-        # Frame contenedor para los botones y la barra de búsqueda
-        frame_superior = ttk.Frame(frame)
-        frame_superior.pack(side=tk.TOP, fill=tk.X, padx=10, pady=10)
-
-        # Frame para los botones
-        frame_botones = ttk.Frame(frame_superior)
-        frame_botones.pack(side=tk.LEFT)
-
-        # Crear botones para cada estado del juego
-        for estado in estados:
-            if estado == "TODOS":
-                btn = ttk.Button(frame_botones, text=estado,
-                                 command=self.refrescar_tabla)
-            else:
-                btn = ttk.Button(frame_botones, text=estado,
-                                 command=lambda x=estado: self.busqueda_limpia_por_estado(x))
-            btn.pack(side=tk.LEFT, padx=5)
-
-        # Frame para la barra de búsqueda
-        frame_busqueda = ttk.Frame(frame_superior)
-        frame_busqueda.pack(side=tk.RIGHT, padx=5)
-
-        self.entry_busqueda = ttk.Entry(frame_busqueda)
-        self.entry_busqueda.pack(side=tk.LEFT, padx=5)
-
-        btn_buscar = ttk.Button(frame_busqueda, text="Buscar", command=lambda: self.buscar_en_tabla(self.entry_busqueda.get()))
-        btn_buscar.pack(side=tk.LEFT, padx=5)
-
-        columnas = ["ID", "Nombre", "Género", "Fecha de estreno", "Duración", "País", "Estado", "Director",
-                  "Distribuidor", "Estudio", "Plataforma", "Descripción", "Comentario", "Puntuación",
-                  "Calificación", "Wiki"]
-        self.treeview_tabla = ttk.Treeview(frame, columns=columnas, show="headings")
-
-        # Barra de scroll horizontal
-        h_scroll = tk.Scrollbar(frame, orient="horizontal", command=self.treeview_tabla.xview)
-        self.treeview_tabla.configure(xscrollcommand=h_scroll.set)
-
-        for col in columnas:
-            self.treeview_tabla.heading(col, text=col)
-        self.treeview_tabla.pack(fill=tk.BOTH, expand=True)
-
-        h_scroll.pack(side=tk.TOP, fill=tk.X)
-
-        frame_botones_tabla = tk.Frame(frame)
-        frame_botones_tabla.pack(pady=5)
-        tk.Button(frame_botones_tabla, text="Agregar", command=self.agregar_a_la_tabla).grid(row=0, column=0, padx=5)
-        tk.Button(frame_botones_tabla, text="Eliminar", command=self.eliminar_de_la_tabla).grid(row=0, column=1, padx=5)
-        tk.Button(frame_botones_tabla, text="Modificar", command=self.modificar_en_tabla).grid(row=0, column=2, padx=5)
-
-        self.listar_peliculas_en_tabla()
-
-        # Agregar menú contextual
-        self.popup_menu = tk.Menu(self.ventana, tearoff=0)
-        self.popup_menu.add_command(label="Agregar", command=self.agregar_a_la_tabla)
-        self.popup_menu.add_command(label="Modificar", command=self.modificar_en_tabla)
-        self.popup_menu.add_command(label="Eliminar", command=self.eliminar_de_la_tabla)
-        self.treeview_tabla.bind("<Button-3>", self.mostrar_menu_contextual)
-
 
     def mostrar_menu_contextual(self, event):
         self.popup_menu.post(event.x_root, event.y_root)
@@ -209,11 +123,11 @@ class VistaPelicula:
         game_id = values[0]  # Asumimos que el ID es el primer valor
 
         try:
-            self.juegoController.eliminar(game_id)  # Llama a un método para eliminar el juego en el controlador
+            self.juegoController.eliminar(game_id)  # Llama a un método para eliminar la pelicula en el controlador
             self.treeview_tabla.delete(selected_item)  # Elimina de la vista
-            messagebox.showinfo("Éxito", "El juego se ha eliminado correctamente.")
+            messagebox.showinfo("Éxito", "La pelicula se ha eliminado correctamente.")
         except Exception as e:
-            messagebox.showerror("Error", f"Error al eliminar el juego: {e}")
+            messagebox.showerror("Error", f"Error al eliminar la pelicula: {e}")
 
     def busqueda_por_estado(self, estado):
         peliculas = self.peliculaController.buscar_por_estado(estado)
@@ -350,7 +264,7 @@ class VistaPelicula:
         def enviar_datos():
             datos = []
             for i, (label, entry) in enumerate(entries.items()):
-                if label == "Fecha de Salida":
+                if label == "Fecha de estreno":
                     fecha_str = entry.get()
                     try:
                         fecha = entry.get_date()
@@ -380,6 +294,92 @@ class VistaPelicula:
 
         boton_enviar = tk.Button(form_window, text="Actualizar", command=enviar_datos)
         boton_enviar.pack(pady=10)
+
+    def crear_vista_lateral(self, frame):
+        frame.config(width=400, height=600, padx=20, pady=20)
+        label_menu = ttk.Label(frame, text="Menú", font=("Helvetica", 20), style="TLabel")
+        label_menu.pack(pady=20)
+
+        # Panel izquierdo para los botones de vistas
+        boton_frame = ttk.Frame(frame)
+        boton_frame.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)
+
+        # Botones de vista
+        self.boton_juegos = ttk.Button(boton_frame, text="Juegos", command=self.on_juegos_button_pressed, width=20)
+        self.boton_juegos.pack(pady=10, padx=10)
+        self.aplicar_estilo_boton(self.boton_juegos)
+
+        self.boton_peliculas = ttk.Button(boton_frame, text="Películas", command=self.on_peliculas_button_pressed,
+                                          width=20)
+        self.boton_peliculas.pack(pady=10, padx=10)
+        self.aplicar_estilo_boton(self.boton_peliculas)
+
+        self.boton_libros = ttk.Button(boton_frame, text="Libros", command=self.on_libros_button_pressed, width=20)
+        self.boton_libros.pack(pady=10, padx=10)
+        self.aplicar_estilo_boton(self.boton_libros)
+
+    def crear_tabla_vista(self, frame):
+        tk.Label(frame, text="PELICULAS").pack()
+
+        estados = ["TODOS" ,"Para ver", "Visto", "Sin ver", "Sin terminar"]
+
+        # Frame contenedor para los botones y la barra de búsqueda
+        frame_superior = ttk.Frame(frame)
+        frame_superior.pack(side=tk.TOP, fill=tk.X, padx=10, pady=10)
+
+        # Frame para los botones
+        frame_botones = ttk.Frame(frame_superior)
+        frame_botones.pack(side=tk.LEFT)
+
+        # Crear botones para cada estado del juego
+        for estado in estados:
+            if estado == "TODOS":
+                btn = ttk.Button(frame_botones, text=estado,
+                                 command=self.refrescar_tabla)
+            else:
+                btn = ttk.Button(frame_botones, text=estado,
+                                 command=lambda x=estado: self.busqueda_limpia_por_estado(x))
+            btn.pack(side=tk.LEFT, padx=5)
+
+        # Frame para la barra de búsqueda
+        frame_busqueda = ttk.Frame(frame_superior)
+        frame_busqueda.pack(side=tk.RIGHT, padx=5)
+
+        self.entry_busqueda = ttk.Entry(frame_busqueda)
+        self.entry_busqueda.pack(side=tk.LEFT, padx=5)
+
+        btn_buscar = ttk.Button(frame_busqueda, text="Buscar", command=lambda: self.buscar_en_tabla(self.entry_busqueda.get()))
+        btn_buscar.pack(side=tk.LEFT, padx=5)
+
+        columnas = ["ID", "Nombre", "Género", "Fecha de estreno", "Duración", "País", "Estado", "Director",
+                  "Distribuidor", "Estudio", "Plataforma", "Descripción", "Comentario", "Puntuación",
+                  "Calificación", "Wiki"]
+        self.treeview_tabla = ttk.Treeview(frame, columns=columnas, show="headings")
+
+        # Barra de scroll horizontal
+        h_scroll = tk.Scrollbar(frame, orient="horizontal", command=self.treeview_tabla.xview)
+        self.treeview_tabla.configure(xscrollcommand=h_scroll.set)
+
+        for col in columnas:
+            self.treeview_tabla.heading(col, text=col)
+        self.treeview_tabla.pack(fill=tk.BOTH, expand=True)
+
+        h_scroll.pack(side=tk.TOP, fill=tk.X)
+
+        frame_botones_tabla = tk.Frame(frame)
+        frame_botones_tabla.pack(pady=5)
+        tk.Button(frame_botones_tabla, text="Agregar", command=self.agregar_a_la_tabla).grid(row=0, column=0, padx=5)
+        tk.Button(frame_botones_tabla, text="Eliminar", command=self.eliminar_de_la_tabla).grid(row=0, column=1, padx=5)
+        tk.Button(frame_botones_tabla, text="Modificar", command=self.modificar_en_tabla).grid(row=0, column=2, padx=5)
+
+        self.listar_peliculas_en_tabla()
+
+        # Agregar menú contextual
+        self.popup_menu = tk.Menu(self.ventana, tearoff=0)
+        self.popup_menu.add_command(label="Agregar", command=self.agregar_a_la_tabla)
+        self.popup_menu.add_command(label="Modificar", command=self.modificar_en_tabla)
+        self.popup_menu.add_command(label="Eliminar", command=self.eliminar_de_la_tabla)
+        self.treeview_tabla.bind("<Button-3>", self.mostrar_menu_contextual)
     
 if __name__ == "__main__":
     VistaPelicula()
