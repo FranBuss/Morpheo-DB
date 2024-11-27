@@ -242,6 +242,7 @@ class VistaJuego:
                 entry.pack(fill=tk.X, expand=True)
             elif label == "Estado":
                 entry = ttk.Combobox(frame, values=["En juego", "Terminado", "Sin terminar", "Para jugar"])
+                entry.set("Para Jugar")
                 entry.pack(fill=tk.X, expand=True)
             elif label == "Puntuación":
                 entry = ttk.Combobox(frame, values=[str(i) for i in range(11)], state="readonly")  # Opciones de 0 a 10
@@ -480,6 +481,10 @@ class VistaJuego:
         self.treeview_tabla.configure(xscrollcommand=h_scroll.set)
 
         for col in columnas:
+            if col == "ID":
+                self.treeview_tabla.column(col, width=50)  # Ajusta el ancho de la columna "ID"
+            else:
+                self.treeview_tabla.column(col, width=150)  # Ajusta el ancho de otras columnas según sea necesario
             self.treeview_tabla.heading(col, text=col)
         self.treeview_tabla.pack(fill=tk.BOTH, expand=True)
 

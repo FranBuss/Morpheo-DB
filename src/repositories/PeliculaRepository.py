@@ -55,7 +55,7 @@ class PeliculaRepository:
                     SET NOMBRE = ?, GENERO = ?, FECHA_ESTRENO = ?, DURACION = ?, PAIS = ?, ESTADO = ?, 
                         DIRECTOR = ?, DISTRIBUIDOR = ?, ESTUDIO = ?, PLATAFORMA = ?, DESCRIPCION = ?, 
                         COMENTARIO = ?, CALIFICACION = ?, PUNTUACION = ?, WIKI = ?
-                    WHERE ID = ?
+                    WHERE ID_PELICULA = ?
                     '''
             values = (nombre, genero, fecha_estreno, duracion, pais, estado, director,
                 distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki, id)

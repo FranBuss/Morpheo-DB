@@ -6,9 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="697eb6a3-896c-464c-bf0e-45179c0475c4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configurations/DatabaseManager.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/JuegoController.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/JuegoController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/LibroController.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/LibroController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/PeliculaController.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/PeliculaController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repositories/LibroRepository.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/repositories/LibroRepository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repositories/PeliculaRepository.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/repositories/PeliculaRepository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/JuegoService.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/JuegoService.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/LibroService.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/LibroService.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/PeliculaService.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/PeliculaService.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/VistaJuego.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/VistaJuego.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/VistaLibro.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/VistaLibro.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/VistaMenu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/VistaMenu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/VistaPelicula.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/VistaPelicula.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

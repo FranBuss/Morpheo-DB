@@ -1,6 +1,5 @@
 from src.repositories.LibroRepository import LibroRepository
 
-
 class ServicioLibro:
 
     def __init__(self):

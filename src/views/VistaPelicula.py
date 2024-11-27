@@ -278,18 +278,43 @@ class VistaPelicula:
             if label == "Fecha de Estreno":
                 entry = DateEntry(frame, date_pattern='yyyy-mm-dd')  # Selector de fecha
                 entry.pack(fill=tk.X, expand=True)
+                entries[label] = entry
             elif label == "Estado":
                 entry = ttk.Combobox(frame, values=["Para ver", "Visto", "Sin ver", "Sin terminar"])
                 entry.pack(fill=tk.X, expand=True)
+                entry.set("Para ver")
+                entries[label] = entry
             elif label == "Puntuación":
                 entry = ttk.Combobox(frame, values=[str(i) for i in range(11)], state="readonly")  # Opciones de 0 a 10
                 entry.set("0")  # Valor por defecto 0
                 entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
+                entries[label] = entry
+            elif label == "Duración":
+                # Creamos entradas separadas para horas, minutos y segundos
+                duration_frame = tk.Frame(frame)
+                entry_hours = tk.Entry(duration_frame, width=3)
+                entry_minutes = tk.Entry(duration_frame, width=3)
+                entry_seconds = tk.Entry(duration_frame, width=3)
+
+                # Establecemos el valor predeterminado en "00"
+                entry_hours.insert(0, "00")
+                entry_minutes.insert(0, "00")
+                entry_seconds.insert(0, "00")
+
+                # Empaquetado de entradas
+                entry_hours.pack(side=tk.LEFT)
+                tk.Label(duration_frame, text=":").pack(side=tk.LEFT)
+                entry_minutes.pack(side=tk.LEFT)
+                tk.Label(duration_frame, text=":").pack(side=tk.LEFT)
+                entry_seconds.pack(side=tk.LEFT)
+                duration_frame.pack(fill=tk.X, expand=True)
+
+                # Almacenamos las llamadas a las entradas en un diccionario
+                entries[label] = (entry_hours, entry_minutes, entry_seconds)
             else:
                 entry = tk.Entry(frame)
                 entry.pack(fill=tk.X, expand=True)
-
-            entries[label] = entry
+                entries[label] = entry
 
         def enviar_datos():
             datos = []
@@ -300,6 +325,10 @@ class VistaPelicula:
                 if label == "Puntuación":
                     valor_puntuacion = entries[label].get()
                     datos.append(valor_puntuacion)
+                elif label == "Duración":
+                    horas, minutos, segundos = entries[label]
+                    duracion = f"{horas.get()}:{minutos.get()}:{segundos.get()}"
+                    datos.append(duracion)
                 else:
                     datos.append(entries[label].get() if entries[label].get() else "")
 
@@ -339,6 +368,7 @@ class VistaPelicula:
                   "Distribuidor", "Estudio", "Plataforma", "Descripción", "Comentario", "Puntuación",
                   "Calificación", "Wiki"]
 
+
         entries = {}
         for i, label in enumerate(labels):
             frame = tk.Frame(form_window)
@@ -352,15 +382,47 @@ class VistaPelicula:
                 if initial_value:
                     entry.set_date(initial_value)
                 entry.pack(fill=tk.X, expand=True)
+                entries[label] = entry
             elif label == "Estado":
                 entry = ttk.Combobox(frame, values=["Para ver", "Visto", "Sin ver", "Sin terminar"])
                 entry.set(initial_value)
                 entry.pack(fill=tk.X, expand=True)
+                entries[label] = entry
+            elif label == "Duración":
+                # Creamos entradas separadas para horas, minutos y segundos
+                duration_frame = tk.Frame(frame)
+                entry_hours = tk.Entry(duration_frame, width=3)
+                entry_minutes = tk.Entry(duration_frame, width=3)
+                entry_seconds = tk.Entry(duration_frame, width=3)
+                # Dividimos el valor inicial en partes correspondientes
+                if initial_value:
+                    horas, minutos, segundos = initial_value.split(':')
+                    entry_hours.insert(0, horas)
+                    entry_minutes.insert(0, minutos)
+                    entry_seconds.insert(0, segundos)
+                else:
+                    # Establecemos el valor predeterminado en "00"
+                    entry_hours.insert(0, "00")
+                    entry_minutes.insert(0, "00")
+                    entry_seconds.insert(0, "00")
+                # Empaquetado de entradas
+                entry_hours.pack(side=tk.LEFT)
+                tk.Label(duration_frame, text=":").pack(side=tk.LEFT)
+                entry_minutes.pack(side=tk.LEFT)
+                tk.Label(duration_frame, text=":").pack(side=tk.LEFT)
+                entry_seconds.pack(side=tk.LEFT)
+                duration_frame.pack(fill=tk.X, expand=True)
+                # Almacenamos las entradas por separado en el diccionario
+                entries[label] = {
+                    "horas": entry_hours,
+                    "minutos": entry_minutes,
+                    "segundos": entry_seconds
+                }
             else:
                 entry = tk.Entry(frame)
                 entry.insert(0, initial_value)
                 entry.pack(fill=tk.X, expand=True)
-            entries[label] = entry
+                entries[label] = entry
 
         def enviar_datos():
             datos = []
@@ -376,6 +438,12 @@ class VistaPelicula:
                         datos.append("")
                     else:
                         datos.append(fecha_str)
+                elif label == "Duración":
+                    horas = entry["horas"].get()
+                    minutos = entry["minutos"].get()
+                    segundos = entry["segundos"].get()
+                    duracion = f"{horas}:{minutos}:{segundos}"
+                    datos.append(duracion)
                 else:
                     entry_value = entry.get()
                     if entry_value == "" and (i + 1 >= len(values) or values[i + 1] == ""):
@@ -497,6 +565,10 @@ class VistaPelicula:
         self.treeview_tabla.configure(xscrollcommand=h_scroll.set)
 
         for col in columnas:
+            if col == "ID":
+                self.treeview_tabla.column(col, width=50)  # Ajusta el ancho de la columna "ID"
+            else:
+                self.treeview_tabla.column(col, width=150)  # Ajusta el ancho de otras columnas según sea necesario
             self.treeview_tabla.heading(col, text=col)
         self.treeview_tabla.pack(fill=tk.BOTH, expand=True)
 

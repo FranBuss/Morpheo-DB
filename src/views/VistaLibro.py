@@ -274,6 +274,7 @@ class VistaLibro:
             elif label == "Estado":
                 entry = ttk.Combobox(frame, values=["Para leer", "Leido", "Sin leer", "En pausa"])
                 entry.pack(fill=tk.X, expand=True)
+                entry.set("Para leer")
             elif label == "Puntuación":
                 entry = ttk.Combobox(frame, values=[str(i) for i in range(11)], state="readonly")  # Opciones de 0 a 10
                 entry.set("0")  # Valor por defecto 0
@@ -487,6 +488,10 @@ class VistaLibro:
         self.treeview_tabla.configure(xscrollcommand=h_scroll.set)
 
         for col in columnas:
+            if col == "ID":
+                self.treeview_tabla.column(col, width=50)  # Ajusta el ancho de la columna "ID"
+            else:
+                self.treeview_tabla.column(col, width=150)  # Ajusta el ancho de otras columnas según sea necesario
             self.treeview_tabla.heading(col, text=col)
         self.treeview_tabla.pack(fill=tk.BOTH, expand=True)
 

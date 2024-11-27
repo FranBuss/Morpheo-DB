@@ -1,6 +1,5 @@
 from src.services.PeliculaService import ServicioPelicula
 
-
 class PeliculaController:
 
     def __init__(self):
@@ -22,9 +21,9 @@ class PeliculaController:
         self.servicioPelicula.eliminar(id)
 
     def actualizar(self, id, nombre, genero, fecha_estreno, duracion, pais, estado, director,
-    distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki):
+                distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki):
         self.servicioPelicula.actualizar(id, nombre, genero, fecha_estreno, duracion, pais, estado, director,
-    distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki)
+                distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki)
 
     def buscar_por_estado(self, estado):
         return self.servicioPelicula.buscar_por_estado(estado)
