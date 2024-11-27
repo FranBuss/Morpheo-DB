@@ -18,13 +18,13 @@ class JuegoRepository:
             query = '''INSERT INTO dbo.JUEGOS(
                             NOMBRE, GENERO, FECHA_SALIDA, ESTADO, DESARROLLADOR, 
                             DISTRIBUIDOR, PLATAFORMA, TEMATICA, MODO_JUEGO, DESCRIPCION, 
-                            COMENTARIO, CLASIFICACION, PUNTUACION
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+                            COMENTARIO, CLASIFICACION, PUNTUACION, TIPO
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
             values = (
                 nombre, genero, fecha_salida, estado,
                 desarrollador, distribuidor, plataforma,
                 tematica, modo_juego, descripcion,
-                comentario, clasificacion, puntuacion
+                comentario, clasificacion, puntuacion, "JUEGO"
             )
             cursor.execute(query, values)
             self.conexion.commit()

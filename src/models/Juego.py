@@ -1,7 +1,7 @@
 class Juego:
 
     def __init__(self, id, nombre, genero, fecha_salida, estado, desarrollador, distribuidor, plataforma, tematica,
-                modo_juego, descripcion, comentario, clasificacion, puntuacion):
+                modo_juego, descripcion, comentario, clasificacion, puntuacion, tipo):
         self.__id = id
         self.__nombre = nombre
         self.__genero = genero
@@ -16,6 +16,7 @@ class Juego:
         self.__comentario = comentario
         self.__clasificacion = clasificacion
         self.__puntuacion = puntuacion
+        self.__tipo = tipo
 
     @property
     def id(self):
@@ -128,3 +129,11 @@ class Juego:
     @puntuacion.setter
     def puntuacion(self, value):
         self.__puntuacion = value
+
+    @property
+    def tipo(self):
+        return self.__tipo
+
+    @tipo.setter
+    def tipo(self, value):
+        self.__tipo= value

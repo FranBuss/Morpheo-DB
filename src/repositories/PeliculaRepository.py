@@ -18,12 +18,12 @@ class PeliculaRepository:
             query = '''INSERT INTO dbo.PELICULAS(
                     NOMBRE, GENERO, FECHA_ESTRENO, DURACION, PAIS, ESTADO,
                     DIRECTOR, DISTRIBUIDOR, ESTUDIO, PLATAFORMA, DESCRIPCION,
-                    COMENTARIO, PUNTUACION, CALIFICACION, WIKI
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+                    COMENTARIO, PUNTUACION, CALIFICACION, WIKI, TIPO
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
             values = (
                 nombre, genero, fecha_estreno, duracion, pais, estado,
                 director, distribuidor, estudio, plataforma, descripcion,
-                comentario, puntuacion, calificacion, wiki
+                comentario, puntuacion, calificacion, wiki, "PELICULA"
             )
             cursor.execute(query, values)
             self.conexion.commit()
@@ -100,6 +100,7 @@ class PeliculaRepository:
                 resultado[13],
                 resultado[14],
                 resultado[15],
+                resultado[16],
             )
             return pelicula
         else:

@@ -16,10 +16,10 @@ class LibroRepository:
             query = '''INSERT INTO dbo.LIBROS(
                         NOMBRE, ESTADO, GENERO, AUTOR, EDITORIAL, 
                         FECHA_PUBLICACION, PAGINA_ACTUAL, CANT_PAGINAS,
-                        DESCRIPCION, CLASIFICACION, PUNTUACION, WIKI
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+                        DESCRIPCION, CLASIFICACION, PUNTUACION, WIKI, TIPO
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
             values = (nombre, estado, genero, autor, editorial, fecha_publicacion, pagina_actual,
-                      cant_paginas, descripcion, clasificacion, puntuacion, wiki)
+                      cant_paginas, descripcion, clasificacion, puntuacion, wiki, "LIBRO")
             cursor.execute(query, values)
             self.conexion.commit()
             print("Libro creado correctamente.")
