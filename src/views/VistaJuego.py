@@ -91,7 +91,7 @@ class VistaJuego:
             "Comentario": detalles_juego.comentario,
             "Clasificación": detalles_juego.clasificacion,
         }
-        ttk.Label(frame_principal, text="Detalles del Juego", font=("Helvetica", 16, "bold")).grid(column=0, row=0,
+        ttk.Label(frame_principal, text="Detalles del Juego", font=("Helvetica", 16, "bold underline")).grid(column=0, row=0,
                                                                                                    columnspan=5,
                                                                                                    pady=(0, 10))
         num_columnas = 2
