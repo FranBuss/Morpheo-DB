@@ -119,7 +119,7 @@ class VistaLibro:
             "Wiki": detalles_libro.wiki,
         }
 
-        ttk.Label(frame_principal, text="Detalles del libro", font=("Helvetica", 16, "bold")).grid(column=0, row=0,
+        ttk.Label(frame_principal, text="Detalles del libro", font=("Helvetica", 16, "bold underline")).grid(column=0, row=0,
                                                                                                    columnspan=5,
                                                                                                    pady=(0, 10))
         num_columnas = 2
@@ -201,7 +201,7 @@ class VistaLibro:
         id = values[0]  # Asumimos que el ID es el primer valor
 
         try:
-            self.libroController.eliminar(id)  # Llama a un método para eliminar el libro en el controlador
+            self.libroController.eliminar_libro(id)  # Llama a un método para eliminar el libro en el controlador
             self.treeview_tabla.delete(selected_item)  # Elimina de la vista
             messagebox.showinfo("Éxito", "El libro se ha eliminado correctamente.")
         except Exception as e:

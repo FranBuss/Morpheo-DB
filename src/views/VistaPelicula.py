@@ -123,7 +123,7 @@ class VistaPelicula:
             "Wiki": detalles_pelicula.wiki,
         }
 
-        ttk.Label(frame_principal, text="Detalles de la pelicula", font=("Helvetica", 16, "bold")).grid(column=0, row=0,
+        ttk.Label(frame_principal, text="Detalles de la pelicula", font=("Helvetica", 16, "bold underline")).grid(column=0, row=0,
                                                                                                    columnspan=5,
                                                                                                    pady=(0, 10))
         num_columnas = 2
@@ -202,10 +202,10 @@ class VistaPelicula:
             messagebox.showerror("Error", "El elemento seleccionado no tiene valores.")
             return
 
-        game_id = values[0]  # Asumimos que el ID es el primer valor
+        id = values[0]  # Asumimos que el ID es el primer valor
 
         try:
-            self.juegoController.eliminar(game_id)  # Llama a un método para eliminar la pelicula en el controlador
+            self.peliculaController.eliminar(id)  # Llama a un método para eliminar la pelicula en el controlador
             self.treeview_tabla.delete(selected_item)  # Elimina de la vista
             messagebox.showinfo("Éxito", "La pelicula se ha eliminado correctamente.")
         except Exception as e:
