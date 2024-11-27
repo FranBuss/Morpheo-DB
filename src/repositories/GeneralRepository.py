@@ -20,9 +20,21 @@ class GeneralRepository:
         cursor.close()
         return lista
 
+    def listar_por_puntuacion(self, puntuacion):
+        cursor = self.conexion.cursor()
+        query = '''SELECT id_pelicula as id, nombre, estado, puntuacion, tipo FROM PELICULAS where puntuacion = {}
+                    UNION
+                    SELECT id_juego, nombre, estado, puntuacion, tipo FROM JUEGOS where puntuacion = {}
+                    UNION
+                    SELECT ID_LIBRO, nombre, estado, puntuacion, tipo FROM LIBROS where puntuacion = {}'''.format(puntuacion, puntuacion, puntuacion)
+        cursor.execute(query)
+        lista = cursor.fetchall()
+        cursor.close()
+        return lista
+
 if __name__ == "__main__":
     repo = GeneralRepository()
     lista = repo.lista_todo()
 
     for e in lista:
-        print(e[0], e[1], e[2], e[3])
+        print(e[0], e[1], e[2], e[3], e[4])

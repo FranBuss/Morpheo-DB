@@ -209,7 +209,7 @@ class VistaGeneral:
             lista = []
 
         for i, objeto in enumerate(lista):
-            values = (objeto[0], objeto[1], objeto[2], objeto[3], objeto.tipo)
+            values = (objeto[0], objeto[1], objeto[2], objeto[3], objeto[4])
             if i % 2 == 0:
                 self.treeview_tabla.insert("", "end", values=values, tags=('evenrow',))
             else:
@@ -241,8 +241,72 @@ class VistaGeneral:
             self.mostrar_detalles_libro(detalles_elemento)
 
     def mostrar_detalles_juego(self, detalles_juego):
-        # Aquí iría el código para mostrar los detalles de un juego
-        pass
+        seleccionado = self.treeview_tabla.focus()
+        info_juego = self.treeview_tabla.item(seleccionado)
+        juego_id = info_juego['values'][0]
+        detalles_juego = self.juegoController.buscar_juego_id(juego_id)
+        self.ventana_info_juego = tk.Toplevel(self.ventana)
+        self.ventana_info_juego.title("Detalles del Juego")
+        self.ventana_info_juego.columnconfigure(0, weight=1)
+        frame_principal = ttk.Frame(self.ventana_info_juego, padding="20 20 20 20", relief="sunken")
+        frame_principal.grid(column=0, row=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+        frame_principal.columnconfigure(0, weight=1)
+        frame_principal.rowconfigure(0, weight=1)
+        atributos_valores = {
+            "Nombre": detalles_juego.nombre,
+            "Género": detalles_juego.genero,
+            "Fecha de Salida": detalles_juego.fecha_salida,
+            "Estado": detalles_juego.estado,
+            "Desarrollador": detalles_juego.desarrollador,
+            "Distribuidor": detalles_juego.distribuidor,
+            "Plataforma": detalles_juego.plataforma,
+            "Temática": detalles_juego.tematica,
+            "Modo de Juego": detalles_juego.modo_juego,
+            "Descripción": detalles_juego.descripcion,
+            "Comentario": detalles_juego.comentario,
+            "Clasificación": detalles_juego.clasificacion,
+        }
+        ttk.Label(frame_principal, text="Detalles del Juego", font=("Helvetica", 16, "bold underline")).grid(column=0,
+                                                                                                             row=0,
+                                                                                                             columnspan=5,
+                                                                                                             pady=(
+                                                                                                             0, 10))
+        num_columnas = 2
+        atributos = list(atributos_valores.items())
+        filas = len(atributos) // num_columnas + (len(atributos) % num_columnas > 0)
+        for i in range(filas):
+            for j in range(num_columnas):
+                index = i * num_columnas + j
+                if index < len(atributos):
+                    atributo, valor = atributos[index]
+                    col = j * 2 if j == 0 else j * 2 + 1
+                    ttk.Label(frame_principal, text=f"{atributo}:", font=("Helvetica", 10, "bold")).grid(column=col,
+                                                                                                         row=(
+                                                                                                                     i * 2) + 1,
+                                                                                                         sticky=tk.E,
+                                                                                                         padx=(0, 5))
+                    ttk.Label(frame_principal, text=valor).grid(column=col + 1, row=(i * 2) + 1, sticky=(tk.W, tk.E))
+                if j == 0 and i * num_columnas + 1 < len(atributos):
+                    # Agrega un separador vertical
+                    ttk.Separator(frame_principal, orient=tk.VERTICAL).grid(column=2, row=(i * 2) + 1,
+                                                                            sticky=(tk.N, tk.S))
+            if i < filas - 1:
+                ttk.Separator(frame_principal, orient=tk.HORIZONTAL).grid(column=0, row=2 * (i + 1), columnspan=5,
+                                                                          sticky=(tk.W, tk.E))
+        fila_final = 2 * filas + 1
+        ttk.Separator(frame_principal, orient=tk.HORIZONTAL).grid(column=0, row=fila_final, columnspan=5,
+                                                                  sticky=(tk.W, tk.E))
+        ttk.Label(frame_principal, text="Puntuación:", font=("Helvetica", 10, "bold")).grid(column=1,
+                                                                                            row=fila_final + 1,
+                                                                                            sticky=tk.E, padx=(0, 5))
+        ttk.Label(frame_principal, text=detalles_juego.puntuacion).grid(column=2, row=fila_final + 1,
+                                                                        sticky=(tk.W, tk.E))
+        ttk.Button(frame_principal, text="Cerrar", command=self.ventana_info_juego.destroy).grid(column=0,
+                                                                                                 row=fila_final + 2,
+                                                                                                 columnspan=5,
+                                                                                                 pady=(10, 0))
+        for child in frame_principal.winfo_children():
+            child.grid_configure(pady=5, padx=5)
 
     def mostrar_detalles_pelicula(self, detalles_pelicula):
         # Aquí iría el código para mostrar los detalles de una película

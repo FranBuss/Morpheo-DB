@@ -90,6 +90,7 @@ class LibroRepository:
                 resultado[10],
                 resultado[11],
                 resultado[12],
+                resultado[13]
             )
             return libro
         else:
