@@ -98,7 +98,8 @@ class JuegoRepository:
                 resultado[10],
                 resultado[11],
                 resultado[12],
-                resultado[13]
+                resultado[13],
+                resultado[14]
             )
             return juego
         else:
