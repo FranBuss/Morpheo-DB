@@ -10,11 +10,11 @@ class GeneralRepository:
 
     def lista_todo(self):
         cursor = self.conexion.cursor()
-        query = '''SELECT id_pelicula as id, nombre, estado, puntuacion FROM PELICULAS
+        query = '''SELECT id_pelicula as id, nombre, estado, puntuacion, tipo FROM PELICULAS
                     UNION
-                    SELECT id_juego, nombre, estado, puntuacion FROM JUEGOS
+                    SELECT id_juego, nombre, estado, puntuacion, tipo FROM JUEGOS
                     UNION
-                    SELECT ID_LIBRO, nombre, estado, puntuacion FROM LIBROS'''
+                    SELECT ID_LIBRO, nombre, estado, puntuacion, tipo FROM LIBROS'''
         cursor.execute(query)
         lista = cursor.fetchall()
         cursor.close()

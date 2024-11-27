@@ -203,31 +203,54 @@ class VistaGeneral:
         # Volver a listar juegos
         self.listar_en_tabla()
 
-
     def listar_en_tabla(self):
         lista = self.generalController.listar_sin_filtro()
         if lista is None:
             lista = []
 
         for i, objeto in enumerate(lista):
-            # Determinar si la fila es par o impar
+            values = (objeto[0], objeto[1], objeto[2], objeto[3], objeto.tipo)
             if i % 2 == 0:
-                self.treeview_tabla.insert("", "end", values=(
-                    objeto[0], objeto[1], objeto[2], objeto[3]), tags=('evenrow',))
+                self.treeview_tabla.insert("", "end", values=values, tags=('evenrow',))
             else:
-                self.treeview_tabla.insert("", "end", values=(
-                    objeto[0], objeto[1], objeto[2], objeto[3]), tags=('oddrow',))
+                self.treeview_tabla.insert("", "end", values=values, tags=('oddrow',))
 
 
     def configurar_interfaz(self):
         self.ventana.title("MorpheoDB")
         self.ventana.geometry("800x600")
-
         frame_izquierda = self.crear_frame(self.ventana, side=tk.LEFT)
         self.crear_vista_completa(frame_izquierda)
-
+        self.treeview_tabla.bind("<Double-1>",
+                                 self.mostrar_info_elemento)  # Bind doble clic a la función mostrar_info_elemento
         self.ventana.mainloop()
 
+    def mostrar_info_elemento(self, event=None):
+        seleccionado = self.treeview_tabla.focus()
+        info_elemento = self.treeview_tabla.item(seleccionado)
+        elemento_id, nombre, estado, puntuacion, tipo = info_elemento['values']
+
+        if tipo == "juego":
+            detalles_elemento = self.juegoController.buscar_juego_id(elemento_id)
+            self.mostrar_detalles_juego(detalles_elemento)
+        elif tipo == "pelicula":
+            detalles_elemento = self.peliculaController.buscar_pelicula_id(elemento_id)
+            self.mostrar_detalles_pelicula(detalles_elemento)
+        elif tipo == "libro":
+            detalles_elemento = self.libroController.buscar_libro_id(elemento_id)
+            self.mostrar_detalles_libro(detalles_elemento)
+
+    def mostrar_detalles_juego(self, detalles_juego):
+        # Aquí iría el código para mostrar los detalles de un juego
+        pass
+
+    def mostrar_detalles_pelicula(self, detalles_pelicula):
+        # Aquí iría el código para mostrar los detalles de una película
+        pass
+
+    def mostrar_detalles_libro(self, detalles_libro):
+        # Aquí iría el código para mostrar los detalles de un libro
+        pass
 
     def crear_frame(self, parent, side):
         frame = tk.Frame(parent)
@@ -292,7 +315,7 @@ class VistaGeneral:
                                 command=lambda: self.buscar_en_tabla(self.entry_busqueda.get()))
         btn_buscar.pack(side=tk.LEFT, padx=5)
 
-        columnas = ["ID", "Nombre", "Estado", "Puntuación"]
+        columnas = ["ID", "Nombre", "Estado", "Puntuación", "Tipo"]
 
         # Estilos para Treeview
         style = ttk.Style()

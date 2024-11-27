@@ -1,7 +1,7 @@
 class Libro:
 
     def __init__(self, id, nombre, estado, genero, autor, editorial, fecha_publicacion, pagina_actual,
-                cant_paginas, descripcion, clasificacion, puntuacion, wiki):
+                cant_paginas, descripcion, clasificacion, puntuacion, wiki, tipo):
         self.__id = id
         self.__nombre = nombre
         self.__estado = estado
@@ -15,6 +15,7 @@ class Libro:
         self.__clasificacion = clasificacion
         self.__puntuacion = puntuacion
         self.__wiki = wiki
+        self.__tipo = tipo
 
     @property
     def id(self):
@@ -119,3 +120,11 @@ class Libro:
     @wiki.setter
     def wiki(self, value):
         self.__wiki = value
+
+    @property
+    def tipo(self):
+        return self.__tipo
+
+    @tipo.setter
+    def tipo(self, value):
+        self.__tipo= value

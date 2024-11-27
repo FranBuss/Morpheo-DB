@@ -1,7 +1,7 @@
 class Pelicula:
 
     def __init__(self, id, nombre, genero, fecha_estreno, duracion, pais, estado, director,
-    distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki):
+    distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki, tipo):
         self.__id = id
         self.__nombre = nombre
         self.__genero = genero
@@ -18,6 +18,7 @@ class Pelicula:
         self.__puntuacion = puntuacion
         self.__calificacion = calificacion
         self.__wiki = wiki
+        self.__tipo = tipo
 
     @property
     def id(self):
@@ -146,3 +147,11 @@ class Pelicula:
     @wiki.setter
     def wiki(self, value):
         self.__wiki = value
+
+    @property
+    def tipo(self):
+        return self.__tipo
+
+    @tipo.setter
+    def tipo(self, value):
+        self.__tipo= value
