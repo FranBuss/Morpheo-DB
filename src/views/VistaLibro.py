@@ -257,8 +257,8 @@ class VistaLibro:
         form_window.title("Agregar libro")
         form_window.geometry("400x600")
 
-        labels = ["Nombre", "Estado", "Genero", "Autor", "Editorial", "Fecha de publicacion", "Pagina actual", "Cantidad de paginas",
-                  "Descripcion", "Clasificacion", "Puntuacion", "Wiki"]
+        labels = ["Nombre", "Estado", "Género", "Autor", "Editorial", "Fecha de publicación", "Pagina actual", "Cantidad de páginas",
+                  "Descripci´pn", "Clasificación", "Puntuación", "Wiki"]
 
 
         entries = {}
@@ -268,7 +268,7 @@ class VistaLibro:
 
             tk.Label(frame, text=label, width=15).pack(side=tk.LEFT)
 
-            if label == "Fecha de publicacion":
+            if label == "Fecha de publicación":
                 entry = DateEntry(frame, date_pattern='yyyy-mm-dd')  # Selector de fecha
                 entry.pack(fill=tk.X, expand=True)
             elif label == "Estado":
@@ -329,8 +329,8 @@ class VistaLibro:
         form_window.title("Actualizar libro")
         form_window.geometry("400x600")
 
-        labels = ["Nombre", "Estado", "Genero", "Autor", "Editorial", "Fecha de publicacion", "Pagina actual", "Cantidad de paginas",
-                  "Descripcion", "Clasificacion", "Puntuacion", "Wiki"]
+        labels = ["Nombre", "Estado", "Género", "Autor", "Editorial", "Fecha de publicación", "Página actual", "Cantidad de páginas",
+                  "Descripción", "Clasificación", "Puntuación", "Wiki"]
 
         entries = {}
         for i, label in enumerate(labels):
@@ -340,7 +340,7 @@ class VistaLibro:
             tk.Label(frame, text=label, width=15).pack(side=tk.LEFT)
 
             initial_value = values[i + 1] if i + 1 < len(values) else ""
-            if label == "Fecha de publicacion":
+            if label == "Fecha de publicación":
                 entry = DateEntry(frame, date_pattern='yyyy-mm-dd')
                 if initial_value:
                     entry.set_date(initial_value)
@@ -358,7 +358,7 @@ class VistaLibro:
         def enviar_datos():
             datos = []
             for i, (label, entry) in enumerate(entries.items()):
-                if label == "Fecha de publicacion":
+                if label == "Fecha de publicación":
                     fecha_str = entry.get()
                     try:
                         fecha = entry.get_date()
@@ -456,8 +456,8 @@ class VistaLibro:
         btn_buscar = ttk.Button(frame_busqueda, text="Buscar", command=lambda: self.buscar_en_tabla(self.entry_busqueda.get()))
         btn_buscar.pack(side=tk.LEFT, padx=5)
 
-        columnas = ["ID", "Nombre", "Estado", "Genero", "Autor", "Editorial", "Fecha de publicacion", "Pagina actual", "Cantidad de paginas",
-                  "Descripcion", "Clasificacion", "Puntuacion", "Wiki"]
+        columnas = ["ID", "Nombre", "Estado", "Género", "Autor", "Editorial", "Fecha de publicación", "Pagina actual", "Cantidad de páginas",
+                  "Descripción", "Clasificación", "Puntuación", "Wiki"]
         # Estilos para Treeview
         style = ttk.Style()
         style.configure("Treeview",
