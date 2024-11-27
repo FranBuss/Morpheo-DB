@@ -71,7 +71,7 @@ class VistaLibro:
 
     def on_libros_button_pressed(self):
         self.limpiar_tabla()
-        self.abrir_vista_libros()
+        self.listar_libros_en_tabla()
 
     def abrir_vista_peliculas(self):
         from src.views.VistaPelicula import VistaPelicula
@@ -170,10 +170,17 @@ class VistaLibro:
         resultado = self.peliculaController.buscar_por_nombre(nombre)
         if resultado:
             self.treeview_tabla.delete(*self.treeview_tabla.get_children())  # Limpiar tabla actual
-            for pelicula in resultado:
-                self.treeview_tabla.insert("", "end", values=(
-                    pelicula[0], pelicula[1], pelicula[2], pelicula[3], pelicula[4], pelicula[5], pelicula[6], pelicula[7], pelicula[8], pelicula[9],
-                    pelicula[10], pelicula[11], pelicula[12], pelicula[13], pelicula[14], pelicula[15]))
+            for i, libro in enumerate(resultado):
+                if i % 2 == 0:
+                    self.treeview_tabla.insert("", "end", values=(
+                        libro[0], libro[1], libro[2], libro[3], libro[4], libro[5], libro[6], libro[7],
+                        libro[8], libro[9],
+                        libro[10], libro[11], libro[12]), tags=('evenrow',))
+                else:
+                    self.treeview_tabla.insert("", "end", values=(
+                        libro[0], libro[1], libro[2], libro[3], libro[4], libro[5], libro[6], libro[7],
+                        libro[8], libro[9],
+                        libro[10], libro[11], libro[12]), tags=('oddrow',))
             print("Búsqueda completada y tabla actualizada con resultados.")
         else:
             print("No se encontraron resultados para la búsqueda.")
@@ -206,11 +213,17 @@ class VistaLibro:
         if libros is None:
             libros = []
 
-        for libro in libros:
-            self.treeview_tabla.insert("", "end", values=(
-                libro[0], libro[1], libro[2], libro[3], libro[4], libro[5], libro[6], libro[7],
-                libro[8], libro[9],
-                libro[10], libro[11], libro[12]))
+        for i, libro in enumerate(libros):
+            if i % 2 == 0:
+                self.treeview_tabla.insert("", "end", values=(
+                    libro[0], libro[1], libro[2], libro[3], libro[4], libro[5], libro[6], libro[7],
+                    libro[8], libro[9],
+                    libro[10], libro[11], libro[12]), tags=('evenrow',))
+            else:
+                self.treeview_tabla.insert("", "end", values=(
+                    libro[0], libro[1], libro[2], libro[3], libro[4], libro[5], libro[6], libro[7],
+                    libro[8], libro[9],
+                    libro[10], libro[11], libro[12]), tags=('oddrow',))
 
     def busqueda_limpia_por_estado(self, estado):
         self.limpiar_tabla()
@@ -227,11 +240,17 @@ class VistaLibro:
         if libros is None:
             libros = []
 
-        for libro in libros:
-            self.treeview_tabla.insert("", "end", values=(
-                libro[0], libro[1], libro[2], libro[3], libro[4], libro[5], libro[6], libro[7],
-                libro[8], libro[9],
-                libro[10], libro[11]))
+        for i, libro in enumerate(libros):
+            if i % 2 == 0:
+                self.treeview_tabla.insert("", "end", values=(
+                    libro[0], libro[1], libro[2], libro[3], libro[4], libro[5], libro[6], libro[7],
+                    libro[8], libro[9],
+                    libro[10], libro[11], libro[12]), tags=('evenrow',))
+            else:
+                self.treeview_tabla.insert("", "end", values=(
+                    libro[0], libro[1], libro[2], libro[3], libro[4], libro[5], libro[6], libro[7],
+                    libro[8], libro[9],
+                    libro[10], libro[11], libro[12]), tags=('oddrow',))
 
     def mostrar_formulario_agregar(self):
         form_window = tk.Toplevel(self.ventana)
@@ -438,7 +457,30 @@ class VistaLibro:
 
         columnas = ["ID", "Nombre", "Estado", "Genero", "Autor", "Editorial", "Fecha de publicacion", "Pagina actual", "Cantidad de paginas",
                   "Descripcion", "Clasificacion", "Puntuacion", "Wiki"]
-        self.treeview_tabla = ttk.Treeview(frame, columns=columnas, show="headings")
+        # Estilos para Treeview
+        style = ttk.Style()
+        style.configure("Treeview",
+                        rowheight=25,
+                        bordercolor="#e0e0e0",
+                        borderwidth=1,
+                        relief="groove")  # Ajuste de estilo general
+
+        style.configure("Treeview.Heading",
+                        font=('Calibri', 10, 'bold'),
+                        bordercolor="#e0e0e0",
+                        borderwidth=1,
+                        relief="flat",
+                        background="lightgrey")  # Estilo para encabezados
+
+        style.map("Treeview.Heading",
+                  background=[('active', 'grey')],
+                  relief=[('active', 'flat')])
+
+        self.treeview_tabla = ttk.Treeview(frame, columns=columnas, show="headings", style="Treeview")
+
+        # Estilo para las filas
+        self.treeview_tabla.tag_configure('evenrow', background='#e8e8e8')
+        self.treeview_tabla.tag_configure('oddrow', background='#d0d0d0')
 
         # Barra de scroll horizontal
         h_scroll = tk.Scrollbar(frame, orient="horizontal", command=self.treeview_tabla.xview)

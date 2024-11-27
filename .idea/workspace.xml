@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="697eb6a3-896c-464c-bf0e-45179c0475c4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repositories/LibroRepository.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/repositories/LibroRepository.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repositories/PeliculaRepository.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/repositories/PeliculaRepository.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/VistaJuego.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/VistaJuego.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/VistaLibro.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/VistaLibro.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/VistaMenu.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/VistaMenu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/VistaPelicula.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/VistaPelicula.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,28 +47,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;Python.Juego.executor&quot;: &quot;Run&quot;,
-    &quot;Python.JuegoController.executor&quot;: &quot;Run&quot;,
-    &quot;Python.JuegoService.executor&quot;: &quot;Run&quot;,
-    &quot;Python.PeliculaService.executor&quot;: &quot;Run&quot;,
-    &quot;Python.VistaJuego.executor&quot;: &quot;Run&quot;,
-    &quot;Python.VistaLibro.executor&quot;: &quot;Run&quot;,
-    &quot;Python.VistaMain.executor&quot;: &quot;Run&quot;,
-    &quot;Python.VistaMenu.executor&quot;: &quot;Run&quot;,
-    &quot;Python.VistaPelicula.executor&quot;: &quot;Run&quot;,
-    &quot;Python.config.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.mainTest.executor&quot;: &quot;Run&quot;,
-    &quot;Python.vistaJuego.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;com.google.cloudcode.ide_session_index&quot;: &quot;20241109_0000&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;franco&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.AIAssistantPromptsLibrary&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "Python.Juego.executor": "Run",
+    "Python.JuegoController.executor": "Run",
+    "Python.JuegoService.executor": "Run",
+    "Python.PeliculaService.executor": "Run",
+    "Python.VistaJuego.executor": "Run",
+    "Python.VistaLibro.executor": "Run",
+    "Python.VistaMain.executor": "Run",
+    "Python.VistaMenu.executor": "Run",
+    "Python.VistaPelicula.executor": "Run",
+    "Python.config.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.mainTest.executor": "Run",
+    "Python.vistaJuego.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "com.google.cloudcode.ide_session_index": "20241109_0000",
+    "git-widget-placeholder": "franco",
+    "settings.editor.selected.configurable": "ml.llm.AIAssistantPromptsLibrary"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
