@@ -65,6 +65,72 @@ class VistaJuego:
         self.ventana.destroy()
         VistaLibro()
 
+    def mostrar_info_juego(self, event=None):
+        seleccionado = self.treeview_tabla.focus()
+        info_juego = self.treeview_tabla.item(seleccionado)
+        juego_id = info_juego['values'][0]
+        detalles_juego = self.juegoController.buscar_juego_id(juego_id)
+        self.ventana_info_juego = tk.Toplevel(self.ventana)
+        self.ventana_info_juego.title("Detalles del Juego")
+        self.ventana_info_juego.columnconfigure(0, weight=1)
+        frame_principal = ttk.Frame(self.ventana_info_juego, padding="20 20 20 20", relief="sunken")
+        frame_principal.grid(column=0, row=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+        frame_principal.columnconfigure(0, weight=1)
+        frame_principal.rowconfigure(0, weight=1)
+        atributos_valores = {
+            "Nombre": detalles_juego.nombre,
+            "Género": detalles_juego.genero,
+            "Fecha de Salida": detalles_juego.fecha_salida,
+            "Estado": detalles_juego.estado,
+            "Desarrollador": detalles_juego.desarrollador,
+            "Distribuidor": detalles_juego.distribuidor,
+            "Plataforma": detalles_juego.plataforma,
+            "Temática": detalles_juego.tematica,
+            "Modo de Juego": detalles_juego.modo_juego,
+            "Descripción": detalles_juego.descripcion,
+            "Comentario": detalles_juego.comentario,
+            "Clasificación": detalles_juego.clasificacion,
+        }
+        ttk.Label(frame_principal, text="Detalles del Juego", font=("Helvetica", 16, "bold")).grid(column=0, row=0,
+                                                                                                   columnspan=5,
+                                                                                                   pady=(0, 10))
+        num_columnas = 2
+        atributos = list(atributos_valores.items())
+        filas = len(atributos) // num_columnas + (len(atributos) % num_columnas > 0)
+        for i in range(filas):
+            for j in range(num_columnas):
+                index = i * num_columnas + j
+                if index < len(atributos):
+                    atributo, valor = atributos[index]
+                    col = j * 2 if j == 0 else j * 2 + 1
+                    ttk.Label(frame_principal, text=f"{atributo}:", font=("Helvetica", 10, "bold")).grid(column=col,
+                                                                                                         row=(
+                                                                                                                     i * 2) + 1,
+                                                                                                         sticky=tk.E,
+                                                                                                         padx=(0, 5))
+                    ttk.Label(frame_principal, text=valor).grid(column=col + 1, row=(i * 2) + 1, sticky=(tk.W, tk.E))
+                if j == 0 and i * num_columnas + 1 < len(atributos):
+                    # Agrega un separador vertical
+                    ttk.Separator(frame_principal, orient=tk.VERTICAL).grid(column=2, row=(i * 2) + 1,
+                                                                            sticky=(tk.N, tk.S))
+            if i < filas - 1:
+                ttk.Separator(frame_principal, orient=tk.HORIZONTAL).grid(column=0, row=2 * (i + 1), columnspan=5,
+                                                                          sticky=(tk.W, tk.E))
+        fila_final = 2 * filas + 1
+        ttk.Separator(frame_principal, orient=tk.HORIZONTAL).grid(column=0, row=fila_final, columnspan=5,
+                                                                  sticky=(tk.W, tk.E))
+        ttk.Label(frame_principal, text="Puntuación:", font=("Helvetica", 10, "bold")).grid(column=1,
+                                                                                            row=fila_final + 1,
+                                                                                            sticky=tk.E, padx=(0, 5))
+        ttk.Label(frame_principal, text=detalles_juego.puntuacion).grid(column=2, row=fila_final + 1,
+                                                                        sticky=(tk.W, tk.E))
+        ttk.Button(frame_principal, text="Cerrar", command=self.ventana_info_juego.destroy).grid(column=0,
+                                                                                                 row=fila_final + 2,
+                                                                                                 columnspan=5,
+                                                                                                 pady=(10, 0))
+        for child in frame_principal.winfo_children():
+            child.grid_configure(pady=5, padx=5)
+
     def busqueda_por_estado(self, estado):
         juegos = self.juegoController.buscar_por_estado(estado)
         if juegos is None:
@@ -172,6 +238,9 @@ class VistaJuego:
         def enviar_datos():
             datos = []
             for label in labels:
+                if label == "Nombre" and not entries[label].get():
+                    messagebox.showerror("Error", "El campo 'Nombre' es obligatorio.")
+                    return  # No continuar si el campo 'Nombre' está vacío
                 if label == "Puntuación":
                     valor_puntuacion = entries[label].get()
                     datos.append(valor_puntuacion)
@@ -320,6 +389,17 @@ class VistaJuego:
 
         estados_juego = ["TODOS" ,"En juego", "Terminado", "Sin terminar", "Para jugar"]
 
+        # Frame contenedor para los botones de acción (Agregar, Modificar, Eliminar)
+        frame_botones_accion = tk.Frame(frame)
+        frame_botones_accion.pack(side=tk.TOP, fill=tk.X, padx=10, pady=0)
+        tk.Button(frame_botones_accion, text="Agregar", command=self.agregar_a_la_tabla).pack(side=tk.LEFT, padx=5)
+        tk.Button(frame_botones_accion, text="Eliminar", command=self.eliminar_de_la_tabla).pack(side=tk.LEFT, padx=5)
+        tk.Button(frame_botones_accion, text="Modificar", command=self.modificar_en_tabla).pack(side=tk.LEFT, padx=5)
+
+        # Agregar un separador
+        separator = ttk.Separator(frame, orient="horizontal")
+        separator.pack(fill=tk.X, padx=10, pady=10)
+
         # Frame contenedor para los botones y la barra de búsqueda
         frame_superior = ttk.Frame(frame)
         frame_superior.pack(side=tk.TOP, fill=tk.X, padx=10, pady=10)
@@ -363,12 +443,6 @@ class VistaJuego:
 
         h_scroll.pack(side=tk.TOP, fill=tk.X)
 
-        frame_botones_tabla = tk.Frame(frame)
-        frame_botones_tabla.pack(pady=5)
-        tk.Button(frame_botones_tabla, text="Agregar", command=self.agregar_a_la_tabla).grid(row=0, column=0, padx=5)
-        tk.Button(frame_botones_tabla, text="Eliminar", command=self.eliminar_de_la_tabla).grid(row=0, column=1, padx=5)
-        tk.Button(frame_botones_tabla, text="Modificar", command=self.modificar_en_tabla).grid(row=0, column=2, padx=5)
-
         self.listar_juegos_en_tabla()
 
         # Agregar menú contextual
@@ -377,6 +451,8 @@ class VistaJuego:
         self.popup_menu.add_command(label="Modificar", command=self.modificar_en_tabla)
         self.popup_menu.add_command(label="Eliminar", command=self.eliminar_de_la_tabla)
         self.treeview_tabla.bind("<Button-3>", self.mostrar_menu_contextual)
+
+        self.treeview_tabla.bind("<Double-1>", self.mostrar_info_juego)
 
 
 # Loop
