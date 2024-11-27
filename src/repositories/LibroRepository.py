@@ -47,7 +47,7 @@ class LibroRepository:
         try:
             query = '''UPDATE dbo.LIBROS SET NOMBRE = ?, ESTADO = ?, GENERO = ?, AUTOR = ?, EDITORIAL = ?, 
                                FECHA_PUBLICACION = ?, PAGINA_ACTUAL = ?, CANT_PAGINAS = ?, 
-                               DESCRIPCION = ?, CLASIFICACION = ?, PUNTUACION = ?, WIKI = ? WHERE ID = ?'''
+                               DESCRIPCION = ?, CLASIFICACION = ?, PUNTUACION = ?, WIKI = ? WHERE ID_LIBRO = ?'''
             values = (nombre, estado, genero, autor, editorial, fecha_publicacion, pagina_actual,
                 cant_paginas, descripcion, clasificacion, puntuacion, wiki, id)
 

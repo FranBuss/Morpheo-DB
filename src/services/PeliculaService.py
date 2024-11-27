@@ -1,6 +1,4 @@
-import pyodbc
 from src.repositories.PeliculaRepository import  PeliculaRepository
-
 
 class ServicioPelicula:
 
@@ -16,10 +14,10 @@ class ServicioPelicula:
     def eliminar(self, id):
         self.peliculaRepository.eliminar(id)
 
-    def actualizar(self, nombre, genero, fecha_estreno, duracion, pais, estado, director,
-    distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki):
-        self.peliculaRepository.actualizar(nombre, genero, fecha_estreno, duracion, pais, estado, director,
-    distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki)
+    def actualizar(self, id, nombre, genero, fecha_estreno, duracion, pais, estado, director,
+                distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki):
+        self.peliculaRepository.actualizar(id, nombre, genero, fecha_estreno, duracion, pais, estado, director,
+                distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki)
 
     def lista_peliculas(self):
         return self.peliculaRepository.lista_peliculas()

@@ -1,5 +1,4 @@
 from src.services.LibroService import ServicioLibro
-from src.models.Libro import Libro
 
 class LibroController:
 
