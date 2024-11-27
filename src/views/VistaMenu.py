@@ -3,6 +3,7 @@ from tkinter import ttk
 from src.views.VistaJuego import VistaJuego
 from src.views.VistaPelicula import VistaPelicula
 from src.views.VistaLibro import VistaLibro
+from src.views.VistaGeneral import VistaGeneral
 
 
 class VistaMenu:
@@ -49,14 +50,16 @@ class VistaMenu:
         self.ventana.destroy()
         VistaLibro()
 
+    def abrir_vista_general(self):
+        self.ventana.destroy()
+        VistaGeneral()
+
     def mostrar_menu_contextual(self, event):
         self.popup_menu.post(event.x_root, event.y_root)
 
     def configurar_interfaz(self):
         frame_medio = self.crear_frame(self.ventana, side=tk.TOP)
-        frame_derecha = self.crear_frame(self.ventana, side=tk.RIGHT)
         self.crear_menu(frame_medio)
-        #self.crear_presentacion(frame_derecha)
 
     def crear_frame(self, parent, side):
         frame = ttk.Frame(parent)
@@ -75,6 +78,10 @@ class VistaMenu:
 
         botones_menu_frame = ttk.Frame(frame_botones_menu)
         botones_menu_frame.pack(padx=20, pady=10)
+
+        boton_general = ttk.Button(botones_menu_frame, text="Vista General", command=self.abrir_vista_general,
+                                  width=20)
+        boton_general.pack(pady=5)
 
         boton_juegos = ttk.Button(botones_menu_frame, text="Gestionar Juegos", command=self.abrir_vista_juegos,
                                   width=20)

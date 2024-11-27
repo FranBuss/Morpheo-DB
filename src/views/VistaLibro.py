@@ -73,6 +73,15 @@ class VistaLibro:
         self.limpiar_tabla()
         self.listar_libros_en_tabla()
 
+    def on_general_button_pressed(self):
+        self.limpiar_tabla()
+        self.abrir_vista_general()
+
+    def abrir_vista_general(self):
+        from src.views.VistaGeneral import VistaGeneral
+        self.ventana.destroy()
+        VistaGeneral()
+
     def abrir_vista_peliculas(self):
         from src.views.VistaPelicula import VistaPelicula
         self.ventana.destroy()
