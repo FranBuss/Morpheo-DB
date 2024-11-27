@@ -8,7 +8,7 @@ class ServicioLibro:
 
     def crear(self, nombre, estado, genero, autor, editorial, fecha_publicacion, pagina_actual,
               cant_paginas, descripcion, clasificacion, puntuacion, wiki):
-        self.libroRepository.crear(self, nombre, estado, genero, autor, editorial, fecha_publicacion, pagina_actual,
+        self.libroRepository.crear(nombre, estado, genero, autor, editorial, fecha_publicacion, pagina_actual,
                                    cant_paginas, descripcion, clasificacion, puntuacion, wiki)
 
     def eliminar(self, id):

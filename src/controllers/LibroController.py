@@ -8,7 +8,7 @@ class LibroController:
 
     def create_libro(self, nombre, estado, genero, autor, editorial, fecha_publicacion, pagina_actual,
                 cant_paginas, descripcion, clasificacion, puntuacion, wiki):
-        self.serviciolibro.crear(self, nombre, estado, genero, autor, editorial, fecha_publicacion, pagina_actual,
+        self.servicioLibro.crear(nombre, estado, genero, autor, editorial, fecha_publicacion, pagina_actual,
                 cant_paginas, descripcion, clasificacion, puntuacion, wiki)
 
     def actualizar(self, id, nombre, estado, genero, autor, editorial, fecha_publicacion, pagina_actual,
