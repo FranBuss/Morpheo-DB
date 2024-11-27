@@ -115,7 +115,6 @@ class VistaLibro:
             "Cantidad de Páginas": detalles_libro.cant_paginas,
             "Descripción": detalles_libro.descripcion,
             "Clasificación": detalles_libro.clasificacion,
-            "Puntuación": detalles_libro.puntuacion,
             "Wiki": detalles_libro.wiki,
         }
 

@@ -118,7 +118,6 @@ class VistaPelicula:
             "Plataforma": detalles_pelicula.plataforma,
             "Descripción": detalles_pelicula.descripcion,
             "Comentario": detalles_pelicula.comentario,
-            "Puntuación": detalles_pelicula.puntuacion,
             "Calificación": detalles_pelicula.calificacion,
             "Wiki": detalles_pelicula.wiki,
         }
