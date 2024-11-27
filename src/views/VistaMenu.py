@@ -63,42 +63,41 @@ class VistaMenu:
         frame.pack(side=side, fill=tk.BOTH, expand=True, padx=10, pady=10)
         return frame
 
-    """
-    def crear_presentacion(self, frame):
-        label_titulo = ttk.Label(frame, text="Bienvenido a MorpheoDB", font=("Helvetica", 20), style="TLabel")
-        label_titulo.pack(pady=20)
-
-        credits_text = Autores:
-        Franco Bussano
-        Gaspar Mansilla
-        Martin Dezotti
-        Marcos Gamba
-        
-
-        label_creditos = ttk.Label(frame, text=credits_text, font=("Helvetica", 14), style="TLabel", justify=tk.LEFT)
-        label_creditos.pack(pady=10, padx=10)"""
-
     def crear_menu(self, frame):
-        label_bienvendio = ttk.Label(frame, text="Bienvenido a Morpheo", font=("Helvetica", 20), style="TLabel")
+        label_bienvendio = ttk.Label(frame, text="Bienvenido a Morpheo", font=("Helvetica", 20, "underline"))
         label_bienvendio.pack(pady=20)
-
-        label_menu = ttk.Label(frame, text="Menú", font=("Helvetica", 20), style="TLabel")
+        label_menu = ttk.Label(frame, text="Menú", font=("Helvetica", 20))
         label_menu.pack(pady=20)
 
-        frame_botones_menu = ttk.Frame(frame)
-        frame_botones_menu.pack(pady=5)
+        # Crear una caja para los botones
+        frame_botones_menu = ttk.LabelFrame(frame, labelanchor="n")
+        frame_botones_menu.pack(pady=10)
 
-        boton_juegos = ttk.Button(frame_botones_menu, text="Gestionar Juegos", command=self.abrir_vista_juegos, width=20)
-        boton_juegos.grid(row=0, column=0, padx=10, pady=10)
+        botones_menu_frame = ttk.Frame(frame_botones_menu)
+        botones_menu_frame.pack(padx=20, pady=10)
 
-        boton_peliculas = ttk.Button(frame_botones_menu, text="Gestionar Peliculas", command=self.abrir_vista_peliculas, width=20)
-        boton_peliculas.grid(row=1, column=0, padx=10, pady=10)
+        boton_juegos = ttk.Button(botones_menu_frame, text="Gestionar Juegos", command=self.abrir_vista_juegos,
+                                  width=20)
+        boton_juegos.pack(pady=5)
 
-        boton_libros = ttk.Button(frame_botones_menu, text="Gestionar Libros", command=self.abrir_vista_libros, width=20)
-        boton_libros.grid(row=2, column=0, padx=10, pady=10)
+        boton_peliculas = ttk.Button(botones_menu_frame, text="Gestionar Peliculas", command=self.abrir_vista_peliculas,
+                                     width=20)
+        boton_peliculas.pack(pady=5)
 
-        boton_salir = ttk.Button(frame_botones_menu, text="Salir", command=self.ventana.quit, width=20)
-        boton_salir.grid(row=3, column=0, padx=5, pady=100)
+        boton_libros = ttk.Button(botones_menu_frame, text="Gestionar Libros", command=self.abrir_vista_libros,
+                                  width=20)
+        boton_libros.pack(pady=5)
+
+        # Crear una caja separada para el botón de salir
+        frame_boton_salir = ttk.LabelFrame(frame, labelanchor="n")
+        frame_boton_salir.pack(pady=50)
+
+        # Contenedor interno para centrar el botón dentro del LabelFrame
+        salir_frame = ttk.Frame(frame_boton_salir)
+        salir_frame.pack(padx=20, pady=10)
+
+        boton_salir = ttk.Button(salir_frame, text="Salir", command=self.ventana.quit, width=20)
+        boton_salir.pack(pady=10)
 
 
 if __name__ == "__main__":

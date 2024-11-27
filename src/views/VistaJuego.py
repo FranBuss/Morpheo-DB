@@ -136,11 +136,16 @@ class VistaJuego:
         if juegos is None:
             juegos = []
 
-        for juego in juegos:
-            self.treeview_tabla.insert("", "end", values=(
-                juego[0], juego[1], juego[2], juego[3], juego[4], juego[5], juego[6], juego[7], juego[8], juego[9],
-                juego[10],
-                juego[11], juego[12], juego[13]))
+        for i, juego in enumerate(juegos):
+            # Determinar si la fila es par o impar
+            if i % 2 == 0:
+                self.treeview_tabla.insert("", "end", values=(
+                    juego[0], juego[1], juego[2], juego[3], juego[4], juego[5], juego[6], juego[7], juego[8], juego[9],
+                    juego[10], juego[11], juego[12], juego[13]), tags=('evenrow',))
+            else:
+                self.treeview_tabla.insert("", "end", values=(
+                    juego[0], juego[1], juego[2], juego[3], juego[4], juego[5], juego[6], juego[7], juego[8], juego[9],
+                    juego[10], juego[11], juego[12], juego[13]), tags=('oddrow',))
 
     def busqueda_limpia_por_estado(self, estado):
         self.limpiar_tabla()
@@ -178,10 +183,18 @@ class VistaJuego:
         resultado = self.juegoController.buscar_por_nombre(nombre)
         if resultado:
             self.treeview_tabla.delete(*self.treeview_tabla.get_children())  # Limpiar tabla actual
-            for juego in resultado:
-                self.treeview_tabla.insert("", "end", values=(
-                    juego[0], juego[1], juego[2], juego[3], juego[4], juego[5], juego[6], juego[7], juego[8], juego[9],
-                    juego[10], juego[11], juego[12], juego[13]))
+            for i, juego in enumerate(resultado):
+                # Determinar si la fila es par o impar
+                if i % 2 == 0:
+                    self.treeview_tabla.insert("", "end", values=(
+                        juego[0], juego[1], juego[2], juego[3], juego[4], juego[5], juego[6], juego[7], juego[8],
+                        juego[9],
+                        juego[10], juego[11], juego[12], juego[13]), tags=('evenrow',))
+                else:
+                    self.treeview_tabla.insert("", "end", values=(
+                        juego[0], juego[1], juego[2], juego[3], juego[4], juego[5], juego[6], juego[7], juego[8],
+                        juego[9],
+                        juego[10], juego[11], juego[12], juego[13]), tags=('oddrow',))
             print("Búsqueda completada y tabla actualizada con resultados.")
         else:
             print("No se encontraron resultados para la búsqueda.")
@@ -198,11 +211,16 @@ class VistaJuego:
         if juegos is None:
             juegos = []
 
-        for juego in juegos:
-            self.treeview_tabla.insert("", "end", values=(
-                juego[0], juego[1], juego[2], juego[3], juego[4], juego[5], juego[6], juego[7], juego[8], juego[9],
-                juego[10],
-                juego[11], juego[12], juego[13]))
+        for i, juego in enumerate(juegos):
+            # Determinar si la fila es par o impar
+            if i % 2 == 0:
+                self.treeview_tabla.insert("", "end", values=(
+                    juego[0], juego[1], juego[2], juego[3], juego[4], juego[5], juego[6], juego[7], juego[8], juego[9],
+                    juego[10], juego[11], juego[12], juego[13]), tags=('evenrow',))
+            else:
+                self.treeview_tabla.insert("", "end", values=(
+                    juego[0], juego[1], juego[2], juego[3], juego[4], juego[5], juego[6], juego[7], juego[8], juego[9],
+                    juego[10], juego[11], juego[12], juego[13]), tags=('oddrow',))
 
     def mostrar_formulario_agregar(self):
         form_window = tk.Toplevel(self.ventana)
@@ -431,7 +449,31 @@ class VistaJuego:
         columnas = ["ID", "Nombre", "Género", "Fecha de Salida", "Estado", "Desarrollador", "Distribuidor",
                     "Plataforma",
                     "Temática", "Modo de Juego", "Descripción", "Comentario", "Clasificación", "Puntuación"]
-        self.treeview_tabla = ttk.Treeview(frame, columns=columnas, show="headings")
+
+        # Estilos para Treeview
+        style = ttk.Style()
+        style.configure("Treeview",
+                        rowheight=25,
+                        bordercolor="#e0e0e0",
+                        borderwidth=1,
+                        relief="groove")  # Ajuste de estilo general
+
+        style.configure("Treeview.Heading",
+                        font=('Calibri', 10, 'bold'),
+                        bordercolor="#e0e0e0",
+                        borderwidth=1,
+                        relief="flat",
+                        background="lightgrey")  # Estilo para encabezados
+
+        style.map("Treeview.Heading",
+                  background=[('active', 'grey')],
+                  relief=[('active', 'flat')])
+
+        self.treeview_tabla = ttk.Treeview(frame, columns=columnas, show="headings", style="Treeview")
+
+        # Estilo para las filas
+        self.treeview_tabla.tag_configure('evenrow', background='#e8e8e8')
+        self.treeview_tabla.tag_configure('oddrow', background='#d0d0d0')
 
         # Barra de scroll horizontal
         h_scroll = tk.Scrollbar(frame, orient="horizontal", command=self.treeview_tabla.xview)
