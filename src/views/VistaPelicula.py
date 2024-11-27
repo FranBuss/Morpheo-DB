@@ -275,7 +275,7 @@ class VistaPelicula:
 
             tk.Label(frame, text=label, width=15).pack(side=tk.LEFT)
 
-            if label == "Fecha de Estreno":
+            if label == "Fecha de estreno":
                 entry = DateEntry(frame, date_pattern='yyyy-mm-dd')  # Selector de fecha
                 entry.pack(fill=tk.X, expand=True)
                 entries[label] = entry
