@@ -97,7 +97,9 @@ class PeliculaRepository:
                 resultado[10],
                 resultado[11],
                 resultado[12],
-                resultado[13]
+                resultado[13],
+                resultado[14],
+                resultado[15],
             )
             return pelicula
         else:
