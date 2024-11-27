@@ -22,15 +22,29 @@ class GeneralRepository:
 
     def listar_por_puntuacion(self, puntuacion):
         cursor = self.conexion.cursor()
-        query = '''SELECT id_pelicula as id, nombre, estado, puntuacion, tipo FROM PELICULAS where puntuacion = {}
+        query = '''SELECT id_pelicula as id, nombre, estado, puntuacion, tipo FROM PELICULAS where puntuacion >= {}
                     UNION
-                    SELECT id_juego, nombre, estado, puntuacion, tipo FROM JUEGOS where puntuacion = {}
+                    SELECT id_juego, nombre, estado, puntuacion, tipo FROM JUEGOS where puntuacion >= {}
                     UNION
-                    SELECT ID_LIBRO, nombre, estado, puntuacion, tipo FROM LIBROS where puntuacion = {}'''.format(puntuacion, puntuacion, puntuacion)
+                    SELECT ID_LIBRO, nombre, estado, puntuacion, tipo FROM LIBROS where puntuacion >= {}'''.format(puntuacion, puntuacion, puntuacion)
         cursor.execute(query)
         lista = cursor.fetchall()
         cursor.close()
         return lista
+
+    def buscar_por_nombre(self, nombre):
+        cursor = self.conexion.cursor()
+        query = '''SELECT id_pelicula as id, nombre, estado, puntuacion, tipo FROM PELICULAS where nombre LIKE ?
+                   UNION
+                   SELECT id_juego, nombre, estado, puntuacion, tipo FROM JUEGOS where nombre LIKE ?
+                   UNION
+                   SELECT ID_LIBRO, nombre, estado, puntuacion, tipo FROM LIBROS where nombre LIKE ?'''
+        # Usar % para realizar la búsqueda con comodín
+        nombre_param = f"%{nombre}%"
+        cursor.execute(query, (nombre_param, nombre_param, nombre_param))
+        juegos = cursor.fetchall()
+        cursor.close()
+        return juegos
 
 if __name__ == "__main__":
     repo = GeneralRepository()

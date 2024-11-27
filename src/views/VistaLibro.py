@@ -407,6 +407,10 @@ class VistaLibro:
         boton_frame.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)
 
         # Botones de vista
+        self.boton_general = ttk.Button(boton_frame, text="General", command=self.on_general_button_pressed, width=20)
+        self.boton_general.pack(pady=10, padx=10)
+        self.aplicar_estilo_boton(self.boton_general)
+
         self.boton_juegos = ttk.Button(boton_frame, text="Juegos", command=self.on_juegos_button_pressed, width=20)
         self.boton_juegos.pack(pady=10, padx=10)
         self.aplicar_estilo_boton(self.boton_juegos)
