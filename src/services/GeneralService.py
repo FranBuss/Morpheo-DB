@@ -10,3 +10,6 @@ class GeneralService:
 
     def buscar_por_nombre(self, nombre):
         return self.generalRepository.buscar_por_nombre(nombre)
+
+    def buscar_por_puntuacion(self, puntuacion):
+        return self.generalRepository.listar_por_puntuacion(puntuacion)

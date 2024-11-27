@@ -10,3 +10,6 @@ class GeneralController:
 
     def buscar_por_nombre(self, nombre):
         return self.generalService.buscar_por_nombre(nombre)
+
+    def buscar_por_puntuacion(self, puntuacion):
+        return self.generalService.buscar_por_puntuacion(puntuacion)
