@@ -230,29 +230,18 @@ class VistaGeneral:
         info_elemento = self.treeview_tabla.item(seleccionado)
         elemento_id, nombre, estado, puntuacion, tipo = info_elemento['values']
 
-        if tipo == "juego":
+        if tipo == "JUEGO":
             detalles_elemento = self.juegoController.buscar_juego_id(elemento_id)
             self.mostrar_detalles_juego(detalles_elemento)
-        elif tipo == "pelicula":
+        elif tipo == "PELICULA":
             detalles_elemento = self.peliculaController.buscar_pelicula_id(elemento_id)
             self.mostrar_detalles_pelicula(detalles_elemento)
-        elif tipo == "libro":
+        elif tipo == "LIBRO":
             detalles_elemento = self.libroController.buscar_libro_id(elemento_id)
             self.mostrar_detalles_libro(detalles_elemento)
 
     def mostrar_detalles_juego(self, detalles_juego):
-        seleccionado = self.treeview_tabla.focus()
-        info_juego = self.treeview_tabla.item(seleccionado)
-        juego_id = info_juego['values'][0]
-        detalles_juego = self.juegoController.buscar_juego_id(juego_id)
-        self.ventana_info_juego = tk.Toplevel(self.ventana)
-        self.ventana_info_juego.title("Detalles del Juego")
-        self.ventana_info_juego.columnconfigure(0, weight=1)
-        frame_principal = ttk.Frame(self.ventana_info_juego, padding="20 20 20 20", relief="sunken")
-        frame_principal.grid(column=0, row=0, sticky=(tk.W, tk.E, tk.N, tk.S))
-        frame_principal.columnconfigure(0, weight=1)
-        frame_principal.rowconfigure(0, weight=1)
-        atributos_valores = {
+        self.mostrar_ventana_detalles("Detalles del Juego", detalles_juego, {
             "Nombre": detalles_juego.nombre,
             "Género": detalles_juego.genero,
             "Fecha de Salida": detalles_juego.fecha_salida,
@@ -265,12 +254,57 @@ class VistaGeneral:
             "Descripción": detalles_juego.descripcion,
             "Comentario": detalles_juego.comentario,
             "Clasificación": detalles_juego.clasificacion,
-        }
-        ttk.Label(frame_principal, text="Detalles del Juego", font=("Helvetica", 16, "bold underline")).grid(column=0,
-                                                                                                             row=0,
-                                                                                                             columnspan=5,
-                                                                                                             pady=(
-                                                                                                             0, 10))
+        })
+
+    def mostrar_detalles_pelicula(self, detalles_pelicula):
+        self.mostrar_ventana_detalles("Detalles de la Película", detalles_pelicula, {
+            "Nombre": detalles_pelicula.nombre,
+            "Género": detalles_pelicula.genero,
+            "Fecha de Estreno": detalles_pelicula.fecha_estreno,
+            "Duración": detalles_pelicula.duracion,
+            "País": detalles_pelicula.pais,
+            "Estado": detalles_pelicula.estado,
+            "Director": detalles_pelicula.director,
+            "Distribuidor": detalles_pelicula.distribuidor,
+            "Estudio": detalles_pelicula.estudio,
+            "Plataforma": detalles_pelicula.plataforma,
+            "Descripción": detalles_pelicula.descripcion,
+            "Comentario": detalles_pelicula.comentario,
+            "Calificación": detalles_pelicula.calificacion,
+            "Wiki": detalles_pelicula.wiki,
+        })
+
+    def mostrar_detalles_libro(self, detalles_libro):
+        self.mostrar_ventana_detalles("Detalles del Libro", detalles_libro, {
+            "Nombre": detalles_libro.nombre,
+            "Estado": detalles_libro.estado,
+            "Género": detalles_libro.genero,
+            "Autor": detalles_libro.autor,
+            "Editorial": detalles_libro.editorial,
+            "Fecha de Publicación": detalles_libro.fecha_publicacion,
+            "Página Actual": detalles_libro.pagina_actual,
+            "Cantidad de Páginas": detalles_libro.cant_paginas,
+            "Descripción": detalles_libro.descripcion,
+            "Clasificación": detalles_libro.clasificacion,
+            "Wiki": detalles_libro.wiki,
+        })
+
+    def mostrar_ventana_detalles(self, titulo_ventana, detalles_elemento, atributos_valores):
+        ventana_info = tk.Toplevel(self.ventana)
+        ventana_info.title(titulo_ventana)
+
+        ventana_info.columnconfigure(0, weight=1)
+
+        frame_principal = ttk.Frame(ventana_info, padding="20 20 20 20", relief="sunken")
+        frame_principal.grid(column=0, row=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+
+        frame_principal.columnconfigure(0, weight=1)
+        frame_principal.rowconfigure(0, weight=1)
+
+        ttk.Label(frame_principal, text=titulo_ventana, font=("Helvetica", 16, "bold underline")).grid(column=0, row=0,
+                                                                                                       columnspan=5,
+                                                                                                       pady=(0, 10))
+
         num_columnas = 2
         atributos = list(atributos_valores.items())
         filas = len(atributos) // num_columnas + (len(atributos) % num_columnas > 0)
@@ -282,7 +316,7 @@ class VistaGeneral:
                     col = j * 2 if j == 0 else j * 2 + 1
                     ttk.Label(frame_principal, text=f"{atributo}:", font=("Helvetica", 10, "bold")).grid(column=col,
                                                                                                          row=(
-                                                                                                                     i * 2) + 1,
+                                                                                                                         i * 2) + 1,
                                                                                                          sticky=tk.E,
                                                                                                          padx=(0, 5))
                     ttk.Label(frame_principal, text=valor).grid(column=col + 1, row=(i * 2) + 1, sticky=(tk.W, tk.E))
@@ -293,28 +327,20 @@ class VistaGeneral:
             if i < filas - 1:
                 ttk.Separator(frame_principal, orient=tk.HORIZONTAL).grid(column=0, row=2 * (i + 1), columnspan=5,
                                                                           sticky=(tk.W, tk.E))
+
         fila_final = 2 * filas + 1
         ttk.Separator(frame_principal, orient=tk.HORIZONTAL).grid(column=0, row=fila_final, columnspan=5,
                                                                   sticky=(tk.W, tk.E))
         ttk.Label(frame_principal, text="Puntuación:", font=("Helvetica", 10, "bold")).grid(column=1,
                                                                                             row=fila_final + 1,
                                                                                             sticky=tk.E, padx=(0, 5))
-        ttk.Label(frame_principal, text=detalles_juego.puntuacion).grid(column=2, row=fila_final + 1,
-                                                                        sticky=(tk.W, tk.E))
-        ttk.Button(frame_principal, text="Cerrar", command=self.ventana_info_juego.destroy).grid(column=0,
-                                                                                                 row=fila_final + 2,
-                                                                                                 columnspan=5,
-                                                                                                 pady=(10, 0))
+        ttk.Label(frame_principal, text=detalles_elemento.puntuacion).grid(column=2, row=fila_final + 1,
+                                                                           sticky=(tk.W, tk.E))
+        ttk.Button(frame_principal, text="Cerrar", command=ventana_info.destroy).grid(column=0, row=fila_final + 2,
+                                                                                      columnspan=5, pady=(10, 0))
+
         for child in frame_principal.winfo_children():
             child.grid_configure(pady=5, padx=5)
-
-    def mostrar_detalles_pelicula(self, detalles_pelicula):
-        # Aquí iría el código para mostrar los detalles de una película
-        pass
-
-    def mostrar_detalles_libro(self, detalles_libro):
-        # Aquí iría el código para mostrar los detalles de un libro
-        pass
 
     def crear_frame(self, parent, side):
         frame = tk.Frame(parent)
@@ -329,82 +355,65 @@ class VistaGeneral:
     def crear_vista_completa(self, frame):
         frame.config(width=400, height=600, padx=20, pady=20)
         label_menu = ttk.Label(frame, text="Menú", font=("Helvetica", 20), style="TLabel")
-        label_menu.pack(side=tk.TOP, pady=20)
-
+        label_menu.pack(side=tk.TOP, pady=10)  # Reducido el padding de 20 a 10
         # Panel izquierdo para los botones de vistas
         boton_frame = ttk.Frame(frame)
         boton_frame.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)
-
-        # Botones de vista
+        # Botones de vista (centrados horizontalmente)
         self.boton_juegos = ttk.Button(boton_frame, text="Juegos", command=self.on_juegos_button_pressed, width=20)
-        self.boton_juegos.pack(pady=10, padx=10)
+        self.boton_juegos.pack(pady=10, padx=10, anchor="center")
         self.aplicar_estilo_boton(self.boton_juegos)
-
         self.boton_peliculas = ttk.Button(boton_frame, text="Películas", command=self.on_peliculas_button_pressed,
                                           width=20)
-        self.boton_peliculas.pack(pady=10, padx=10)
+        self.boton_peliculas.pack(pady=10, padx=10, anchor="center")
         self.aplicar_estilo_boton(self.boton_peliculas)
-
         self.boton_libros = ttk.Button(boton_frame, text="Libros", command=self.on_libros_button_pressed, width=20)
-        self.boton_libros.pack(pady=10, padx=10)
+        self.boton_libros.pack(pady=10, padx=10, anchor="center")
         self.aplicar_estilo_boton(self.boton_libros)
 
         # Crear el frame principal del contenido a la derecha del panel lateral
         frame_contenido = ttk.Frame(frame)
         frame_contenido.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=10, pady=10)
-
         # Aquí empieza la parte original de crear_tabla_vista
         tk.Label(frame_contenido, text="GENERAL").pack()
-
         # Agregar un separador
         separator = ttk.Separator(frame_contenido, orient="horizontal")
         separator.pack(fill=tk.X, padx=10, pady=10)
-
         # Frame contenedor para los botones y la barra de búsqueda
         frame_superior = ttk.Frame(frame_contenido)
         frame_superior.pack(side=tk.TOP, fill=tk.X, padx=10, pady=10)
-
         # Frame para los botones
         frame_botones = ttk.Frame(frame_superior)
         frame_botones.pack(side=tk.LEFT)
-
         # Frame para la barra de búsqueda
         frame_busqueda = ttk.Frame(frame_superior)
         frame_busqueda.pack(side=tk.RIGHT, padx=5)
-
         self.entry_busqueda = ttk.Entry(frame_busqueda)
         self.entry_busqueda.pack(side=tk.LEFT, padx=5)
-
         btn_buscar = ttk.Button(frame_busqueda, text="Buscar",
                                 command=lambda: self.buscar_en_tabla(self.entry_busqueda.get()))
         btn_buscar.pack(side=tk.LEFT, padx=5)
 
         columnas = ["ID", "Nombre", "Estado", "Puntuación", "Tipo"]
-
         # Estilos para Treeview
         style = ttk.Style()
         style.configure("Treeview", rowheight=25, bordercolor="#e0e0e0", borderwidth=1, relief="groove")
         style.configure("Treeview.Heading", font=('Calibri', 10, 'bold'), bordercolor="#e0e0e0", borderwidth=1,
                         relief="flat", background="lightgrey")
         style.map("Treeview.Heading", background=[('active', 'grey')], relief=[('active', 'flat')])
-
         self.treeview_tabla = ttk.Treeview(frame_contenido, columns=columnas, show="headings", style="Treeview")
-
         # Estilo para las filas
         self.treeview_tabla.tag_configure('evenrow', background='#e8e8e8')
         self.treeview_tabla.tag_configure('oddrow', background='#d0d0d0')
-
         # Barra de scroll horizontal
         h_scroll = tk.Scrollbar(frame_contenido, orient="horizontal", command=self.treeview_tabla.xview)
         self.treeview_tabla.configure(xscrollcommand=h_scroll.set)
-
         for col in columnas:
-            if col == "ID":
+            if (col == "ID"):
                 self.treeview_tabla.column(col, width=50)  # Ajusta el ancho de la columna "ID"
             else:
                 self.treeview_tabla.column(col, width=150)  # Ajusta el ancho de otras columnas según sea necesario
             self.treeview_tabla.heading(col, text=col)
-
         self.treeview_tabla.pack(fill=tk.BOTH, expand=True)
         h_scroll.pack(side=tk.TOP, fill=tk.X)
 
