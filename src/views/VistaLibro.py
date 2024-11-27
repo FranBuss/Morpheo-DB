@@ -258,7 +258,7 @@ class VistaLibro:
         form_window.geometry("400x600")
 
         labels = ["Nombre", "Estado", "Género", "Autor", "Editorial", "Fecha de publicación", "Pagina actual", "Cantidad de páginas",
-                  "Descripci´pn", "Clasificación", "Puntuación", "Wiki"]
+                  "Descripción", "Clasificación", "Puntuación", "Wiki"]
 
 
         entries = {}
@@ -379,7 +379,7 @@ class VistaLibro:
             print("Datos a enviar:", datos)
 
             try:
-                self.peliculaController.actualizar(values[0], *datos)
+                self.libroController.actualizar(values[0], *datos)
                 form_window.destroy()
                 self.refrescar_tabla()
                 messagebox.showinfo("Éxito", "El libro se ha actualizado correctamente.")
