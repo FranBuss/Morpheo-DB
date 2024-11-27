@@ -25,7 +25,6 @@ class VistaGeneral:
         self.configurar_interfaz()
         self.ventana.mainloop()
 
-
     def estilizar(self):
         style = ttk.Style()
         style.configure("TButton",
@@ -44,35 +43,32 @@ class VistaGeneral:
         style.configure("TEntry", font=("Helvetica", 12), padding=5)
         style.configure("TFrame", background="#f2f2f2")
 
-
     def aplicar_estilo_boton(self, boton):
         boton.config(style="TButton")
 
-
     def mostrar_menu_contextual(self, event):
         self.popup_menu.post(event.x_root, event.y_root)
-
 
     def on_juegos_button_pressed(self):
         self.limpiar_tabla()
         self.abrir_vista_juegos()
 
-
     def on_peliculas_button_pressed(self):
         self.limpiar_tabla()
         self.abrir_vista_peliculas()
-
 
     def on_libros_button_pressed(self):
         self.limpiar_tabla()
         self.abrir_vista_libros()
 
+    def on_general_button_pressed(self):
+        self.limpiar_tabla()
+        self.listar_en_tabla()
 
     def abrir_vista_peliculas(self):
         from src.views.VistaPelicula import VistaPelicula
         self.ventana.destroy()
         VistaPelicula()
-
 
     def abrir_vista_libros(self):
         from src.views.VistaLibro import VistaLibro
@@ -83,7 +79,6 @@ class VistaGeneral:
         from src.views.VistaJuego import VistaJuego
         self.ventana.destroy()
         VistaJuego()
-
 
     def mostrar_info_juego(self, event=None):
         seleccionado = self.treeview_tabla.focus()
@@ -114,7 +109,8 @@ class VistaGeneral:
         ttk.Label(frame_principal, text="Detalles del Juego", font=("Helvetica", 16, "bold underline")).grid(column=0,
                                                                                                              row=0,
                                                                                                              columnspan=5,
-                                                                                                             pady=(0, 10))
+                                                                                                             pady=(
+                                                                                                             0, 10))
         num_columnas = 2
         atributos = list(atributos_valores.items())
         filas = len(atributos) // num_columnas + (len(atributos) % num_columnas > 0)
@@ -152,7 +148,6 @@ class VistaGeneral:
         for child in frame_principal.winfo_children():
             child.grid_configure(pady=5, padx=5)
 
-
     def busqueda_por_estado(self, estado):
         juegos = self.juegoController.buscar_por_estado(estado)
         if juegos is None:
@@ -169,11 +164,9 @@ class VistaGeneral:
                     juego[0], juego[1], juego[2], juego[3], juego[4], juego[5], juego[6], juego[7], juego[8], juego[9],
                     juego[10], juego[11], juego[12], juego[13]), tags=('oddrow',))
 
-
     def busqueda_limpia_por_estado(self, estado):
         self.limpiar_tabla()
         self.busqueda_por_estado(estado)
-
 
     def buscar_en_tabla(self, nombre):
         resultado = self.juegoController.buscar_por_nombre(nombre)
@@ -195,7 +188,6 @@ class VistaGeneral:
         else:
             print("No se encontraron resultados para la búsqueda.")
 
-
     def refrescar_tabla(self):
         # Limpiar todos los elementos del Treeview
         for item in self.treeview_tabla.get_children():
@@ -214,7 +206,6 @@ class VistaGeneral:
                 self.treeview_tabla.insert("", "end", values=values, tags=('evenrow',))
             else:
                 self.treeview_tabla.insert("", "end", values=values, tags=('oddrow',))
-
 
     def configurar_interfaz(self):
         self.ventana.title("MorpheoDB")
@@ -316,7 +307,7 @@ class VistaGeneral:
                     col = j * 2 if j == 0 else j * 2 + 1
                     ttk.Label(frame_principal, text=f"{atributo}:", font=("Helvetica", 10, "bold")).grid(column=col,
                                                                                                          row=(
-                                                                                                                         i * 2) + 1,
+                                                                                                                     i * 2) + 1,
                                                                                                          sticky=tk.E,
                                                                                                          padx=(0, 5))
                     ttk.Label(frame_principal, text=valor).grid(column=col + 1, row=(i * 2) + 1, sticky=(tk.W, tk.E))
@@ -347,7 +338,6 @@ class VistaGeneral:
         frame.pack(side=side, fill=tk.BOTH, expand=True, padx=10, pady=10)
         return frame
 
-
     def limpiar_tabla(self):
         if self.treeview_tabla:
             self.treeview_tabla.delete(*self.treeview_tabla.get_children())
@@ -360,6 +350,9 @@ class VistaGeneral:
         boton_frame = ttk.Frame(frame)
         boton_frame.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)
         # Botones de vista (centrados horizontalmente)
+        self.boton_general = ttk.Button(boton_frame, text="General", command=self.on_general_button_pressed, width=20)
+        self.boton_general.pack(pady=10, padx=10, anchor="center")
+        self.aplicar_estilo_boton(self.boton_general)
         self.boton_juegos = ttk.Button(boton_frame, text="Juegos", command=self.on_juegos_button_pressed, width=20)
         self.boton_juegos.pack(pady=10, padx=10, anchor="center")
         self.aplicar_estilo_boton(self.boton_juegos)
@@ -418,6 +411,7 @@ class VistaGeneral:
         h_scroll.pack(side=tk.TOP, fill=tk.X)
 
         self.listar_en_tabla()
+
 
 if __name__ == "__main__":
     VistaGeneral()
