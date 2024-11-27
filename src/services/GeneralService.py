@@ -7,3 +7,6 @@ class GeneralService:
 
     def lista_sin_filtro(self):
         return self.generalRepository.lista_todo()
+
+    def buscar_por_nombre(self, nombre):
+        return self.generalRepository.buscar_por_nombre(nombre)

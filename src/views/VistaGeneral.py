@@ -169,21 +169,15 @@ class VistaGeneral:
         self.busqueda_por_estado(estado)
 
     def buscar_en_tabla(self, nombre):
-        resultado = self.juegoController.buscar_por_nombre(nombre)
+        resultado = self.generalController.buscar_por_nombre(nombre)
         if resultado:
             self.treeview_tabla.delete(*self.treeview_tabla.get_children())  # Limpiar tabla actual
-            for i, juego in enumerate(resultado):
-                # Determinar si la fila es par o impar
+            for i, objeto in enumerate(resultado):
+                values = (objeto[0], objeto[1], objeto[2], objeto[3], objeto[4])
                 if i % 2 == 0:
-                    self.treeview_tabla.insert("", "end", values=(
-                        juego[0], juego[1], juego[2], juego[3], juego[4], juego[5], juego[6], juego[7], juego[8],
-                        juego[9],
-                        juego[10], juego[11], juego[12], juego[13]), tags=('evenrow',))
+                    self.treeview_tabla.insert("", "end", values=values, tags=('evenrow',))
                 else:
-                    self.treeview_tabla.insert("", "end", values=(
-                        juego[0], juego[1], juego[2], juego[3], juego[4], juego[5], juego[6], juego[7], juego[8],
-                        juego[9],
-                        juego[10], juego[11], juego[12], juego[13]), tags=('oddrow',))
+                    self.treeview_tabla.insert("", "end", values=values, tags=('oddrow',))
             print("Búsqueda completada y tabla actualizada con resultados.")
         else:
             print("No se encontraron resultados para la búsqueda.")
@@ -210,11 +204,18 @@ class VistaGeneral:
     def configurar_interfaz(self):
         self.ventana.title("MorpheoDB")
         self.ventana.geometry("800x600")
+
         frame_izquierda = self.crear_frame(self.ventana, side=tk.LEFT)
-        self.crear_vista_completa(frame_izquierda)
+        self.crear_vista_lateral(frame_izquierda)
+
+        frame_derecha = self.crear_frame(self.ventana, side=tk.LEFT, expand=True, fill=tk.BOTH)
+        self.crear_tabla_vista(frame_derecha)
+
         self.treeview_tabla.bind("<Double-1>",
-                                 self.mostrar_info_elemento)  # Bind doble clic a la función mostrar_info_elemento
+                                 self.mostrar_info_elemento)
+
         self.ventana.mainloop()
+
 
     def mostrar_info_elemento(self, event=None):
         seleccionado = self.treeview_tabla.focus()
@@ -333,82 +334,123 @@ class VistaGeneral:
         for child in frame_principal.winfo_children():
             child.grid_configure(pady=5, padx=5)
 
-    def crear_frame(self, parent, side):
+    def crear_frame(self, parent, side, expand=False, fill=None):
         frame = tk.Frame(parent)
-        frame.pack(side=side, fill=tk.BOTH, expand=True, padx=10, pady=10)
+        frame.pack(side=side, expand=expand, fill=fill)
         return frame
 
     def limpiar_tabla(self):
         if self.treeview_tabla:
             self.treeview_tabla.delete(*self.treeview_tabla.get_children())
 
-    def crear_vista_completa(self, frame):
+    def crear_vista_lateral(self, frame):
         frame.config(width=400, height=600, padx=20, pady=20)
         label_menu = ttk.Label(frame, text="Menú", font=("Helvetica", 20), style="TLabel")
-        label_menu.pack(side=tk.TOP, pady=10)  # Reducido el padding de 20 a 10
+        label_menu.pack(pady=20)
+
         # Panel izquierdo para los botones de vistas
         boton_frame = ttk.Frame(frame)
         boton_frame.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)
-        # Botones de vista (centrados horizontalmente)
+
+        # Botones de vista
         self.boton_general = ttk.Button(boton_frame, text="General", command=self.on_general_button_pressed, width=20)
-        self.boton_general.pack(pady=10, padx=10, anchor="center")
+        self.boton_general.pack(pady=10, padx=10)
         self.aplicar_estilo_boton(self.boton_general)
+
         self.boton_juegos = ttk.Button(boton_frame, text="Juegos", command=self.on_juegos_button_pressed, width=20)
-        self.boton_juegos.pack(pady=10, padx=10, anchor="center")
+        self.boton_juegos.pack(pady=10, padx=10)
         self.aplicar_estilo_boton(self.boton_juegos)
+
         self.boton_peliculas = ttk.Button(boton_frame, text="Películas", command=self.on_peliculas_button_pressed,
                                           width=20)
-        self.boton_peliculas.pack(pady=10, padx=10, anchor="center")
+        self.boton_peliculas.pack(pady=10, padx=10)
         self.aplicar_estilo_boton(self.boton_peliculas)
+
         self.boton_libros = ttk.Button(boton_frame, text="Libros", command=self.on_libros_button_pressed, width=20)
-        self.boton_libros.pack(pady=10, padx=10, anchor="center")
+        self.boton_libros.pack(pady=10, padx=10)
         self.aplicar_estilo_boton(self.boton_libros)
 
-        # Crear el frame principal del contenido a la derecha del panel lateral
-        frame_contenido = ttk.Frame(frame)
-        frame_contenido.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=10, pady=10)
-        # Aquí empieza la parte original de crear_tabla_vista
-        tk.Label(frame_contenido, text="GENERAL").pack()
+
+    def crear_tabla_vista(self, frame):
+        tk.Label(frame, text="General").pack()
+
+        estados = ["TODOS"]
+
+
         # Agregar un separador
-        separator = ttk.Separator(frame_contenido, orient="horizontal")
+        separator = ttk.Separator(frame, orient="horizontal")
         separator.pack(fill=tk.X, padx=10, pady=10)
+
         # Frame contenedor para los botones y la barra de búsqueda
-        frame_superior = ttk.Frame(frame_contenido)
+        frame_superior = ttk.Frame(frame)
         frame_superior.pack(side=tk.TOP, fill=tk.X, padx=10, pady=10)
+
         # Frame para los botones
         frame_botones = ttk.Frame(frame_superior)
         frame_botones.pack(side=tk.LEFT)
+
+        # Crear botones para cada estado del juego
+        for estado in estados:
+            if estado == "TODOS":
+                btn = ttk.Button(frame_botones, text=estado,
+                                 command=self.refrescar_tabla)
+            else:
+                btn = ttk.Button(frame_botones, text=estado,
+                                 command=lambda x=estado: self.busqueda_limpia_por_estado(x))
+            btn.pack(side=tk.LEFT, padx=5)
+
         # Frame para la barra de búsqueda
         frame_busqueda = ttk.Frame(frame_superior)
         frame_busqueda.pack(side=tk.RIGHT, padx=5)
+
         self.entry_busqueda = ttk.Entry(frame_busqueda)
         self.entry_busqueda.pack(side=tk.LEFT, padx=5)
+
         btn_buscar = ttk.Button(frame_busqueda, text="Buscar",
                                 command=lambda: self.buscar_en_tabla(self.entry_busqueda.get()))
         btn_buscar.pack(side=tk.LEFT, padx=5)
 
-        columnas = ["ID", "Nombre", "Estado", "Puntuación", "Tipo"]
+        columnas = ["ID", "Nombre","Estado", "Puntuación", "Tipo"]
+
         # Estilos para Treeview
         style = ttk.Style()
-        style.configure("Treeview", rowheight=25, bordercolor="#e0e0e0", borderwidth=1, relief="groove")
-        style.configure("Treeview.Heading", font=('Calibri', 10, 'bold'), bordercolor="#e0e0e0", borderwidth=1,
-                        relief="flat", background="lightgrey")
-        style.map("Treeview.Heading", background=[('active', 'grey')], relief=[('active', 'flat')])
-        self.treeview_tabla = ttk.Treeview(frame_contenido, columns=columnas, show="headings", style="Treeview")
+        style.configure("Treeview",
+                        rowheight=25,
+                        bordercolor="#e0e0e0",
+                        borderwidth=1,
+                        relief="groove")  # Ajuste de estilo general
+
+        style.configure("Treeview.Heading",
+                        font=('Calibri', 10, 'bold'),
+                        bordercolor="#e0e0e0",
+                        borderwidth=1,
+                        relief="flat",
+                        background="lightgrey")  # Estilo para encabezados
+
+        style.map("Treeview.Heading",
+                  background=[('active', 'grey')],
+                  relief=[('active', 'flat')])
+
+        self.treeview_tabla = ttk.Treeview(frame, columns=columnas, show="headings", style="Treeview")
+
         # Estilo para las filas
         self.treeview_tabla.tag_configure('evenrow', background='#e8e8e8')
         self.treeview_tabla.tag_configure('oddrow', background='#d0d0d0')
+
         # Barra de scroll horizontal
-        h_scroll = tk.Scrollbar(frame_contenido, orient="horizontal", command=self.treeview_tabla.xview)
+        h_scroll = tk.Scrollbar(frame, orient="horizontal", command=self.treeview_tabla.xview)
         self.treeview_tabla.configure(xscrollcommand=h_scroll.set)
+
         for col in columnas:
-            if (col == "ID"):
-                self.treeview_tabla.column(col, width=50)  # Ajusta el ancho de la columna "ID"
+            if col == "ID":
+                self.treeview_tabla.column(col, width=10)  # Ajusta el ancho de la columna "ID"
             else:
                 self.treeview_tabla.column(col, width=150)  # Ajusta el ancho de otras columnas según sea necesario
             self.treeview_tabla.heading(col, text=col)
         self.treeview_tabla.pack(fill=tk.BOTH, expand=True)
+
         h_scroll.pack(side=tk.TOP, fill=tk.X)
+
 
         self.listar_en_tabla()
 
