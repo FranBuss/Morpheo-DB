@@ -48,8 +48,6 @@ class JuegoRepository:
                    modo_juego, descripcion, comentario, clasificacion, puntuacion):
         cursor = self.conexion.cursor()
 
-        nombre = nombre.capitalize()
-
         try:
             query = '''UPDATE dbo.JUEGOS SET 
                         NOMBRE = ?, GENERO = ?, FECHA_SALIDA = ?, ESTADO = ?, 

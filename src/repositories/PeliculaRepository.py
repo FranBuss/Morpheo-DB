@@ -47,8 +47,6 @@ class PeliculaRepository:
                 distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki):
         cursor = self.conexion.cursor()
 
-        nombre = nombre.capitalize()
-
         try:
             query = '''
                     UPDATE dbo.PELICULAS 

@@ -42,8 +42,6 @@ class LibroRepository:
                 cant_paginas, descripcion, clasificacion, puntuacion, wiki):
         cursor = self.conexion.cursor()
 
-        nombre = nombre.capitalize()
-
         try:
             query = '''UPDATE dbo.LIBROS SET NOMBRE = ?, ESTADO = ?, GENERO = ?, AUTOR = ?, EDITORIAL = ?, 
                                FECHA_PUBLICACION = ?, PAGINA_ACTUAL = ?, CANT_PAGINAS = ?, 
