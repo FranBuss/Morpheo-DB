@@ -11,7 +11,6 @@ class LibroRepository:
     def crear(self, nombre, estado, genero, autor, editorial, fecha_publicacion, pagina_actual,
               cant_paginas, descripcion, clasificacion, puntuacion, wiki):
         cursor = self.conexion.cursor()
-        nombre = nombre.capitalize()
         try:
             query = '''INSERT INTO dbo.LIBROS(
                         NOMBRE, ESTADO, GENERO, AUTOR, EDITORIAL, 

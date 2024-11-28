@@ -22,11 +22,11 @@ class GeneralRepository:
 
     def listar_por_puntuacion(self, puntuacion):
         cursor = self.conexion.cursor()
-        query = '''SELECT id_pelicula as id, nombre, estado, puntuacion, tipo FROM PELICULAS where puntuacion >= {}
+        query = '''SELECT id_pelicula as id, nombre, estado, puntuacion, tipo FROM PELICULAS where puntuacion = {}
                     UNION
-                    SELECT id_juego, nombre, estado, puntuacion, tipo FROM JUEGOS where puntuacion >= {}
+                    SELECT id_juego, nombre, estado, puntuacion, tipo FROM JUEGOS where puntuacion = {}
                     UNION
-                    SELECT ID_LIBRO, nombre, estado, puntuacion, tipo FROM LIBROS where puntuacion >= {}'''.format(puntuacion, puntuacion, puntuacion)
+                    SELECT ID_LIBRO, nombre, estado, puntuacion, tipo FROM LIBROS where puntuacion = {}'''.format(puntuacion, puntuacion, puntuacion)
         cursor.execute(query)
         lista = cursor.fetchall()
         cursor.close()
