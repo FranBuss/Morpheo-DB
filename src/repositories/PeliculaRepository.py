@@ -12,8 +12,6 @@ class PeliculaRepository:
     distribuidor, estudio, plataforma, descripcion, comentario, puntuacion, calificacion, wiki):
         cursor = self.conexion.cursor()
 
-        nombre = nombre.capitalize()
-
         try:
             query = '''INSERT INTO dbo.PELICULAS(
                     NOMBRE, GENERO, FECHA_ESTRENO, DURACION, PAIS, ESTADO,
@@ -25,6 +23,7 @@ class PeliculaRepository:
                 director, distribuidor, estudio, plataforma, descripcion,
                 comentario, puntuacion, calificacion, wiki, "PELICULA"
             )
+
             cursor.execute(query, values)
             self.conexion.commit()
             print("Pelicula creado correctamente.")
